@@ -1,9 +1,9 @@
 package com.example.Proyecto.Repository;
 
-import com.example.Proyecto.Model.RespuestaAPIAlimento;
+import com.example.Proyecto.Model.RegistroRespuestasIA;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RespuestaAPIAlimentoRepository extends JpaRepository<RespuestaAPIAlimento, Long> {
+public interface RegistroRespuestasIARepository extends JpaRepository<RegistroRespuestasIA, Long> {
 }

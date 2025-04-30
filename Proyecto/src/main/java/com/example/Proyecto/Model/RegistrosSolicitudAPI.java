@@ -35,18 +35,13 @@ public class RegistrosSolicitudAPI {
 
     @ManyToOne
     @JoinColumn(name="id_usuario", nullable = false)
-    //@JsonIgnore
+    @JsonIgnore
     private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name="id_api", nullable = false)
-    //@JsonIgnore
+    @JsonIgnore
     private APINutricional apiNutricional;
-
-    @OneToMany(mappedBy = "registrosSolicitudAPI", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@JsonIgnore
-    private List<RespuestaAPIAlimento> respuestaAPIAlimentos;
-
 
 }
 

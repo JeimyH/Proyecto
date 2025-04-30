@@ -29,6 +29,9 @@ public class PreferenciasUsuario {
     @Column(name = "Alimentos_Excluidos", nullable = false)
     private String alimentosExcluidos;
 
+    @Column(name = "Configuraciones_Notificaciones", nullable = false)
+    private String configuracionesNotificaciones;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
     private Usuario usuario;

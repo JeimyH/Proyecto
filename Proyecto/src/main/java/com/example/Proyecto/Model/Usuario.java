@@ -47,25 +47,61 @@ public class Usuario {
     @Column(name = "Objetivos_Salud")
     private String objetivosSalud;
 
-    @Column(name = "Creado")
+    @Column(name = "Creado_En")
     private Timestamp creadoEn;
 
+    @Column(name = "Actualizado_En")
+    private Timestamp actualizadoEn;
+
+    // Relaciones entre tablas
+    // Uno a muchos
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@JsonIgnore
+    @JsonIgnore
     private List<RegistroAgua> registroAguas;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@JsonIgnore
+    @JsonIgnore
     private List<RegistroAlimento> registroAlimentos;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@JsonIgnore
+    @JsonIgnore
     private List<RutinaAlimenticiaIA> rutinaAlimenticiaIAS;
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private PreferenciasUsuario preferenciasUsuario;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Alimento> alimentos;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@JsonIgnore
+    @JsonIgnore
+    private List<EstadisticasNutricionales> estadisticasNutricionales;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<RegistrosSolicitudAPI> registrosSolicitudAPIS;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<RegistroRespuestasIA> registroRespuestasIAS;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<SesionChatbot> sesionChatbots;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<TokenSesion> tokenSesions;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Recordatorio> recordatorios;
+
+    // Uno a Uno
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private PreferenciasUsuario preferenciasUsuario;
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private ConfiguracionAplicacion configuracionAplicacion;
 }

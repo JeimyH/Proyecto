@@ -28,6 +28,6 @@ public class RegistroAgua {
 
     @ManyToOne
     @JoinColumn(name="id_usuario", nullable = false)
-    //@JsonIgnore
+    @JsonIgnore
     private Usuario usuario;
 }

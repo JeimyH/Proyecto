@@ -1,5 +1,6 @@
 package com.example.Proyecto.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,10 +30,14 @@ public class APINutricional {
     @Column(name = "Clave_API", length = 100)
     private String claveApi;
 
+    @Lob
+    @Column(name = "Descripcion", columnDefinition = "TEXT") // Opcional, pero recomendable
+    private String descripcion;
+
     @Column(name = "Ultimo_Acceso")
     private Timestamp ultimoAcceso;
 
     @OneToMany(mappedBy = "apiNutricional", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@JsonIgnore
+    @JsonIgnore
     private List<RegistrosSolicitudAPI> registrosSolicitudAPIS;
 }

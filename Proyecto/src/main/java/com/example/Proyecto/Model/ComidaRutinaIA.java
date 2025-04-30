@@ -18,6 +18,10 @@ public class ComidaRutinaIA {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_comida;
 
+    @Column(name = "Origen")
+    @Enumerated(EnumType.STRING)
+    private TipoComida tipoComida;
+
     @Column(name = "Alimentos_Sugeridos", nullable = false)
     private String alimentosSugeridos;
 
@@ -30,8 +34,17 @@ public class ComidaRutinaIA {
     @Column(name = "Dia_Numero", nullable = false)
     private String diaNumero;
 
+    public enum TipoComida{
+        Desayuno,
+        Almuerzo,
+        Cena,
+        Snack
+    }
+
+    // Relaciones
+
     @ManyToOne
     @JoinColumn(name="id_rutina", nullable = false)
-    //@JsonIgnore
+    @JsonIgnore
     private RutinaAlimenticiaIA rutina;
 }

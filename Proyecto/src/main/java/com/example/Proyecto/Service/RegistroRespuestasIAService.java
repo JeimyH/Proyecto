@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-public class RespuestaAPIAlimentoService {
+public class RegistroRespuestasIAService {
     @Autowired
     public EquipoRepository equipoRepository;
 

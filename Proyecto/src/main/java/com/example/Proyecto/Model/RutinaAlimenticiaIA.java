@@ -25,21 +25,29 @@ public class RutinaAlimenticiaIA {
     @Column(name = "Fecha_Inicio")
     private LocalDate fechaInicio;
 
+    @Column(name = "Fecha_Fin")
+    private LocalDate fechaFin;
+
     @Column(name = "Objetivo_Calorico_Dia")
     private float objetivoCaloricoDia;
 
-    @Column(name = "Parametros_IA")
-    private String parametrosIA;
+    @Column(name = "Detalles")
+    private String detalles;
 
     @Column(name = "Creado_En")
     private Timestamp creadoEn;
 
+    @Column(name = "Actualizado_En")
+    private Timestamp actualizadoEn;
+
+    //Relaciones
+
     @ManyToOne
     @JoinColumn(name="id_usuario", nullable = false)
-    //@JsonIgnore
+    @JsonIgnore
     private Usuario usuario;
 
     @OneToMany(mappedBy = "rutina", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@JsonIgnore
+    @JsonIgnore
     private List<ComidaRutinaIA> comidaRutinaIAS;
 }

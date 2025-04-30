@@ -14,29 +14,25 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Setter
 @Getter
-@Table(name = "Registro_Alimento")
-public class RegistroAlimento {
+@Table(name = "Token_Sesion")
+public class TokenSesion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_registroAlimento;
+    private long id_token;
 
-    @Column(name = "Tamano_Porcion")
-    private float tamanoPorcion;
+    @Column(name = "Token")
+    private String token;
 
-    @Column(name = "Consumido_En")
-    private Timestamp consumidoEn;
+    @Column(name = "Expiracion")
+    private Timestamp expiracion;
 
-    @Column(name = "URL_Imagen")
-    private String urlImagen;
+    @Column(name = "Revocado")
+    private boolean revocado;
+
+    //Relaciones
 
     @ManyToOne
     @JoinColumn(name="id_usuario", nullable = false)
     @JsonIgnore
     private Usuario usuario;
-
-    @ManyToOne
-    @JoinColumn(name="id_alimento", nullable = false)
-    @JsonIgnore
-    private Alimento alimento;
-
 }

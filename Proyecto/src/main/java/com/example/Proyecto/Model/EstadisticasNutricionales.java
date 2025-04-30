@@ -56,8 +56,8 @@ public class EstadisticasNutricionales {
     @Column(name = "IMC")
     private float imc;
 
-    @Column(name = "Objetivos_Cumplidos")
-    private String objetivosCumplidos;
+    //@Column(name = "Objetivos_Cumplidos")
+    //private String objetivosCumplidos;
 
     @Column(name = "Calorias_Desayuno")
     private float caloriasDesayuno;
@@ -71,8 +71,11 @@ public class EstadisticasNutricionales {
     @Column(name = "Calorias_Snack")
     private float caloriasSnack;
 
+    //Relaciones
+
     @ManyToOne
     @JoinColumn(name="id_usuario", nullable = false)
     @JsonIgnore
     private Usuario usuario;
+
 }
