@@ -23,16 +23,16 @@ public class Alimento {
     @Column(name = "Nombre_Alimento", nullable = false, length = 100)
     private String nombreAlimento;
 
-    @Column(name = "Calorias")
+    @Column(name = "Calorias", nullable = false)
     private float calorias;
 
-    @Column(name = "Proteinas")
+    @Column(name = "Proteinas", nullable = false)
     private float proteinas;
 
-    @Column(name = "Carbohidratos")
+    @Column(name = "Carbohidratos", nullable = false)
     private float carbohidratos;
 
-    @Column(name = "Grasas")
+    @Column(name = "Grasas", nullable = false)
     private float grasas;
 
     @Column(name = "Azucares")
@@ -54,6 +54,9 @@ public class Alimento {
     @Enumerated(EnumType.STRING)
     private Origen origen;
 
+    //@Column(name = "Creado_Por")
+    //private long creadoPor;
+
     public enum Origen{
         Ingresado,
         API_Interna
@@ -61,7 +64,7 @@ public class Alimento {
 
     //Relaciones uno a muchos
     @ManyToOne
-    @JoinColumn(name="id_usuario", nullable = false)
+    @JoinColumn(name="creado_Por", referencedColumnName = "id_usuario", nullable = false)
     @JsonIgnore
     private Usuario usuario;
 

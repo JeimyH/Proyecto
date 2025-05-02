@@ -20,10 +20,10 @@ public class InteraccionChatbot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_interaccion;
 
-    @Column(name = "Consulta_Usuario")
+    @Column(name = "Consulta_Usuario", nullable = false)
     private String consultaUsuario;
 
-    @Column(name = "Respuesta_IA")
+    @Column(name = "Respuesta_IA", nullable = false)
     private String respuestaIA;
 
     @Column(name = "Origen")
@@ -33,7 +33,7 @@ public class InteraccionChatbot {
     @Column(name = "Tema")
     private String tema;
 
-    @Column(name = "Timestamp")
+    @Column(name = "Timestamp", nullable = false)
     private Timestamp timestamp;
 
     public enum TipoIntento{

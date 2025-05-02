@@ -1,9 +1,9 @@
 package com.example.Proyecto.Repository;
 
-import com.example.Proyecto.Model.TokenSesion;
+import com.example.Proyecto.Model.ConfiguracionAplicacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TokenSesionRepository extends JpaRepository<TokenSesion, Long> {
+public interface ConfiguracionAplicacionRepository extends JpaRepository<ConfiguracionAplicacion, Long> {
 }

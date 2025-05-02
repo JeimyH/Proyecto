@@ -20,10 +20,10 @@ public class RegistroRespuestasIA {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_respuesta;
 
-    @Column(name = "Datos_Respuesta", length = 100)
+    @Column(name = "Datos_Respuesta", nullable = false, length = 100)
     private String datosRespuesta;
 
-    @Column(name = "Creado_En")
+    @Column(name = "Creado_En", nullable = false)
     private Timestamp creadoEn;
 
     //Relaciones

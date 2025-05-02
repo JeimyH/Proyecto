@@ -18,21 +18,21 @@ public class ComidaRutinaIA {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_comida;
 
-    @Column(name = "Origen")
+    @Column(name = "Tipo_Comida", nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoComida tipoComida;
 
-    @Column(name = "Alimentos_Sugeridos", nullable = false)
+    @Column(name = "Alimentos_Sugeridos")
     private String alimentosSugeridos;
 
-    @Column(name = "ValoresNutricionales", nullable = false)
+    @Column(name = "ValoresNutricionales")
     private String valoresNutricionales;
 
-    @Column(name = "Tamano_Porciones", nullable = false)
+    @Column(name = "Tamano_Porciones")
     private String tamanoPorciones;
 
     @Column(name = "Dia_Numero", nullable = false)
-    private String diaNumero;
+    private int diaNumero;
 
     public enum TipoComida{
         Desayuno,

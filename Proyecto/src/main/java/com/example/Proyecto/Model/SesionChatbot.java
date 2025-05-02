@@ -21,7 +21,7 @@ public class SesionChatbot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_sesion;
 
-    @Column(name = "Inicio_Sesion")
+    @Column(name = "Inicio_Sesion", nullable = false)
     private Timestamp inicioSesion;
 
     @Column(name = "Fin_Sesion")

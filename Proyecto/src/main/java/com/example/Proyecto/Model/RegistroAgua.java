@@ -20,10 +20,10 @@ public class RegistroAgua {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_registroAgua;
 
-    @Column(name = "Cantidadml")
+    @Column(name = "Cantidadml", nullable = false)
     private float cantidadml;
 
-    @Column(name = "Registrado_En")
+    @Column(name = "Registrado_En", nullable = false)
     private Timestamp registradoEn;
 
     @ManyToOne

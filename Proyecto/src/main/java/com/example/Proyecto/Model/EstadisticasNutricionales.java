@@ -20,10 +20,10 @@ public class EstadisticasNutricionales {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_estadistica;
 
-    @Column(name = "Fecha")
+    @Column(name = "Fecha", nullable = false)
     private LocalDate fecha;
 
-    @Column(name = "Total_Calorias")
+    @Column(name = "Total_Calorias", nullable = false)
     private float totalCalorias;
 
     @Column(name = "Total_Proteinas")
@@ -53,7 +53,7 @@ public class EstadisticasNutricionales {
     @Column(name = "Total_Comidas")
     private int totalComidas;
 
-    @Column(name = "IMC")
+    @Column(name = "IMC", nullable = false)
     private float imc;
 
     //@Column(name = "Objetivos_Cumplidos")

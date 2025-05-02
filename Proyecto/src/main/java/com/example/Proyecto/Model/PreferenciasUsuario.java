@@ -18,18 +18,18 @@ import java.util.List;
 public class PreferenciasUsuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_preferenciasUsuario;
+    private long id_preferencia;
 
     @Column(name = "Objetivo_Agua_Diario")
     private float objetivoAguaDiario;
 
-    @Column(name = "Comidas_Preferidas", nullable = false)
+    @Column(name = "Comidas_Preferidas")
     private String comidasPreferidas;
 
-    @Column(name = "Alimentos_Excluidos", nullable = false)
+    @Column(name = "Alimentos_Excluidos")
     private String alimentosExcluidos;
 
-    @Column(name = "Configuraciones_Notificaciones", nullable = false)
+    @Column(name = "Configuraciones_Notificaciones")
     private String configuracionesNotificaciones;
 
     @OneToOne(cascade = CascadeType.ALL)

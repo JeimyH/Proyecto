@@ -21,16 +21,16 @@ public class RegistrosSolicitudAPI {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_solicitud;
 
-    @Column(name = "Endpoint", length = 100)
+    @Column(name = "Endpoint", nullable = false, length = 100)
     private String endpoint;
 
-    @Column(name = "Datos_Solicitud")
+    @Column(name = "Datos_Solicitud", nullable = false)
     private String datosSolicitud;
 
     @Column(name = "Datos_Respuesta")
     private String datosRespuesta;
 
-    @Column(name = "Creado_En")
+    @Column(name = "Creado_En", nullable = false)
     private Timestamp creadoEn;
 
     @ManyToOne

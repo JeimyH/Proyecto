@@ -32,7 +32,7 @@ public class Usuario {
     @Column(name = "Nombre", nullable = false, length = 100)
     private String nombre;
 
-    @Column(name = "Fecha_Nacimiento")
+    @Column(name = "Fecha_Nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
 
     @Column(name = "Altura", nullable = false)
@@ -47,7 +47,7 @@ public class Usuario {
     @Column(name = "Objetivos_Salud")
     private String objetivosSalud;
 
-    @Column(name = "Creado_En")
+    @Column(name = "Creado_En", nullable = false)
     private Timestamp creadoEn;
 
     @Column(name = "Actualizado_En")

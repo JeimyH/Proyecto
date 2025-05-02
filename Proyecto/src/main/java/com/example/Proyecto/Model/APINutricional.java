@@ -21,13 +21,13 @@ public class APINutricional {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_api;
 
-    @Column(name = "Nombre_API", length = 100)
+    @Column(name = "Nombre_API", nullable = false, length = 100)
     private String nombreApi;
 
-    @Column(name = "URL_Base")
+    @Column(name = "URL_Base", nullable = false)
     private String urlBase;
 
-    @Column(name = "Clave_API", length = 100)
+    @Column(name = "Clave_API", nullable = false, length = 100)
     private String claveApi;
 
     @Lob
