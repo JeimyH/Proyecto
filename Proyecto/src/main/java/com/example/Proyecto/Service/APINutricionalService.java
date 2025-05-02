@@ -54,8 +54,6 @@ public class APINutricionalService {
                     throw new IllegalArgumentException("La clave de la API es obligatoria.");
                 }else if(apiNutricional.getUrlBase()==null || apiNutricional.getUrlBase().isEmpty()) {
                     throw new IllegalArgumentException("La url de la API es obligatoria.");
-                } else if (apiNutricional.getUltimoAcceso()==null) {
-                    throw new IllegalArgumentException("El ultimo acceso a la API es obligatoria.");
                 }
                 return  apiNutricionalRepository.save(apiNutricional);
             }
@@ -85,6 +83,8 @@ public class APINutricionalService {
             apiExistente.setNombreApi(apiActualizado.getNombreApi());
             apiExistente.setClaveApi(apiActualizado.getClaveApi());
             apiExistente.setUrlBase(apiActualizado.getUrlBase());
+            apiExistente.setDescripcion(apiActualizado.getDescripcion());
+            apiExistente.setUltimoAcceso(apiActualizado.getUltimoAcceso());
             return apiNutricionalRepository.save(apiExistente);
         }else{
             return null;

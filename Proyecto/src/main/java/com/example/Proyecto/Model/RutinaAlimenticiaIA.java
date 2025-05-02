@@ -22,19 +22,19 @@ public class RutinaAlimenticiaIA {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_rutina;
 
-    @Column(name = "Fecha_Inicio")
+    @Column(name = "Fecha_Inicio", nullable = false)
     private LocalDate fechaInicio;
 
     @Column(name = "Fecha_Fin")
     private LocalDate fechaFin;
 
-    @Column(name = "Objetivo_Calorico_Dia")
+    @Column(name = "Objetivo_Calorico_Dia", nullable = false)
     private float objetivoCaloricoDia;
 
     @Column(name = "Detalles")
     private String detalles;
 
-    @Column(name = "Creado_En")
+    @Column(name = "Creado_En", nullable = false)
     private Timestamp creadoEn;
 
     @Column(name = "Actualizado_En")

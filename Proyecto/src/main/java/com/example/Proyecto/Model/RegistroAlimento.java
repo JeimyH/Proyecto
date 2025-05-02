@@ -20,13 +20,13 @@ public class RegistroAlimento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_registroAlimento;
 
-    @Column(name = "Tamano_Porcion")
+    @Column(name = "Tamano_Porcion", nullable = false)
     private float tamanoPorcion;
 
-    @Column(name = "Consumido_En")
+    @Column(name = "Consumido_En", nullable = false)
     private Timestamp consumidoEn;
 
-    @Column(name = "URL_Imagen")
+    @Column(name = "URL_Imagen", nullable = false)
     private String urlImagen;
 
     @ManyToOne

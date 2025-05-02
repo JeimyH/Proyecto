@@ -20,13 +20,13 @@ public class TokenSesion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_token;
 
-    @Column(name = "Token")
+    @Column(name = "Token", nullable = false)
     private String token;
 
-    @Column(name = "Expiracion")
+    @Column(name = "Expiracion", nullable = false)
     private Timestamp expiracion;
 
-    @Column(name = "Revocado")
+    @Column(name = "Revocado", nullable = false)
     private boolean revocado;
 
     //Relaciones
