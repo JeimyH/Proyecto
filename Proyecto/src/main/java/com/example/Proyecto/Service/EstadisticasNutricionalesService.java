@@ -1,7 +1,6 @@
 package com.example.Proyecto.Service;
 
 import com.example.Proyecto.Model.EstadisticasNutricionales;
-import com.example.Proyecto.Model.Usuario;
 import com.example.Proyecto.Repository.EstadisticasNutricionalesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +42,25 @@ public class EstadisticasNutricionalesService {
         }
     }
 
+    public EstadisticasNutricionales guardarEstadisticasNutricionales(EstadisticasNutricionales estadisticasNutricionales){
+        try{
+            if(estadisticasNutricionales==null){
+                throw new IllegalArgumentException("La Estadistica Nutricional no puede ser nula");
+
+            }else{
+                if (estadisticasNutricionales.getFecha() == null) {
+                    throw new IllegalArgumentException("La fecha de la Estadistica Nutricional es obligatoria.");
+                }else if(estadisticasNutricionales.getTotalCalorias() == 0){
+                    throw new IllegalArgumentException("El total de las calorias es obligatorio.");
+                } else if (estadisticasNutricionales.getImc() == 0) {
+                    throw new IllegalArgumentException("El imc es obligatorio.");
+                }
+                return  estadisticasNutricionalesRepository.save(estadisticasNutricionales);
+            }
+        }catch (Exception e){
+            throw new RuntimeException("Error al intentar guardar la Estadistica Nutricional " + e.getMessage(), e);
+        }
+    }
 
     public void eliminarEstadisticasNutricionales(long id_estadistica){
         try {
@@ -58,5 +76,29 @@ public class EstadisticasNutricionalesService {
         }
     }
 
+    public EstadisticasNutricionales actualizarEstadisticasNutricionales(long id_estadistica, EstadisticasNutricionales estadisticaActualizado){
+        Optional<EstadisticasNutricionales> estadisticasOpt = estadisticasNutricionalesRepository.findById(id_estadistica);
+        if(estadisticasOpt.isPresent()){
+            EstadisticasNutricionales estadisticaExistente = estadisticasOpt.get();
+            estadisticaExistente.setFecha(estadisticaActualizado.getFecha());
+            estadisticaExistente.setTotalCalorias(estadisticaActualizado.getTotalCalorias());
+            estadisticaExistente.setTotalProteinas(estadisticaActualizado.getTotalProteinas());
+            estadisticaExistente.setTotalCarbohidratos(estadisticaActualizado.getTotalCarbohidratos());
+            estadisticaExistente.setTotalGrasas(estadisticaActualizado.getTotalGrasas());
+            estadisticaExistente.setTotalAzucares(estadisticaActualizado.getTotalAzucares());
+            estadisticaExistente.setTotalFibra(estadisticaActualizado.getTotalFibra());
+            estadisticaExistente.setTotalSodio(estadisticaActualizado.getTotalSodio());
+            estadisticaExistente.setTotalGrasasSaturadas(estadisticaActualizado.getTotalGrasasSaturadas());
+            estadisticaExistente.setTotalAgua(estadisticaActualizado.getTotalAgua());
+            estadisticaExistente.setTotalComidas(estadisticaActualizado.getTotalComidas());
+            estadisticaExistente.setCaloriasDesayuno(estadisticaActualizado.getCaloriasDesayuno());
+            estadisticaExistente.setCaloriasAlmuerzo(estadisticaActualizado.getCaloriasAlmuerzo());
+            estadisticaExistente.setCaloriasCena(estadisticaActualizado.getCaloriasCena());
+            estadisticaExistente.setCaloriasSnack(estadisticaActualizado.getCaloriasSnack());
+            return estadisticasNutricionalesRepository.save(estadisticaExistente);
+        }else{
+            return null;
+        }
+    }
 
 }
