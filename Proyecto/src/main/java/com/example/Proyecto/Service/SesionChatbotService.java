@@ -14,7 +14,7 @@ public class SesionChatbotService {
     @Autowired
     public SesionChatbotRepository sesionRepository;
 
-    public List<SesionChatbot> listarSesionChatbot(){
+    public List<SesionChatbot> listarSesionesChatbot(){
         // Validacion para intentar obtener la lista de las sesiones del chatbot
         try {
             List<SesionChatbot> sesionChatbots = sesionRepository.findAll();
