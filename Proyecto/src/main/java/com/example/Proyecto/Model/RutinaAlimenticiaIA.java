@@ -31,6 +31,9 @@ public class RutinaAlimenticiaIA {
     @Column(name = "Objetivo_Calorico_Dia", nullable = false)
     private float objetivoCaloricoDia;
 
+    @Column(name = "Dias")
+    private String dias;
+
     @Column(name = "Detalles")
     private String detalles;
 
@@ -50,4 +53,8 @@ public class RutinaAlimenticiaIA {
     @OneToMany(mappedBy = "rutina", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<ComidaRutinaIA> comidaRutinaIAS;
+
+    @OneToMany(mappedBy = "rutina", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<RespuestaPlanificadorEdamam> respuestaPlanificadorEdamams;
 }

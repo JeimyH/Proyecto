@@ -86,6 +86,7 @@ public class RutinaAlimenticiaIAService {
             rutinaExistente.setDetalles(rutinaActualizado.getDetalles());
             rutinaExistente.setCreadoEn(rutinaActualizado.getCreadoEn());
             rutinaExistente.setActualizadoEn(rutinaActualizado.getActualizadoEn());
+            rutinaExistente.setDias(rutinaActualizado.getDias());
             return rutinaRepository.save(rutinaExistente);
         }else{
             return null;

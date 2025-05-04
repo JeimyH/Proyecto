@@ -37,6 +37,16 @@ public class APINutricional {
     @Column(name = "Ultimo_Acceso")
     private Timestamp ultimoAcceso;
 
+    @Column(name = "Tipo_API", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TipoAPI tipoAPI;
+
+    public enum TipoAPI{
+        open_food_facts,
+        edamam_mealplanner
+    }
+
+    //Relaciones
     @OneToMany(mappedBy = "apiNutricional", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<RegistrosSolicitudAPI> registrosSolicitudAPIS;
