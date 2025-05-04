@@ -14,7 +14,7 @@ public class RegistroRespuestasIAService {
     @Autowired
     public RegistroRespuestasIARepository respuestasIARepository;
 
-    public List<RegistroRespuestasIA> listarRegistroRespuestasIA(){
+    public List<RegistroRespuestasIA> listarRegistrosRespuestasIA(){
         // Validacion para intentar obtener la lista de los Registros con las RespuestasIA
         try {
             List<RegistroRespuestasIA> registroRespuestasIAS = respuestasIARepository.findAll();
