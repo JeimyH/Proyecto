@@ -54,6 +54,8 @@ public class APINutricionalService {
                     throw new IllegalArgumentException("La clave de la API es obligatoria.");
                 }else if(apiNutricional.getUrlBase()==null || apiNutricional.getUrlBase().isEmpty()) {
                     throw new IllegalArgumentException("La url de la API es obligatoria.");
+                } else if (apiNutricional.getTipoAPI()==null) {
+                    throw new IllegalArgumentException("El tipo de API es obligatorio.");
                 }
                 return  apiNutricionalRepository.save(apiNutricional);
             }
@@ -85,6 +87,7 @@ public class APINutricionalService {
             apiExistente.setUrlBase(apiActualizado.getUrlBase());
             apiExistente.setDescripcion(apiActualizado.getDescripcion());
             apiExistente.setUltimoAcceso(apiActualizado.getUltimoAcceso());
+            apiExistente.setTipoAPI(apiActualizado.getTipoAPI());
             return apiNutricionalRepository.save(apiExistente);
         }else{
             return null;

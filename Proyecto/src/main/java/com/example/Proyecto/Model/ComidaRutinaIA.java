@@ -34,11 +34,25 @@ public class ComidaRutinaIA {
     @Column(name = "Dia_Numero", nullable = false)
     private int diaNumero;
 
+    @Column(name = "Dia_Semana", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private DiaSemana diaSemana;
+
     public enum TipoComida{
         Desayuno,
         Almuerzo,
         Cena,
         Snack
+    }
+
+    public enum DiaSemana{
+        Lunes,
+        Martes,
+        Miercoles,
+        Jueves,
+        Vierner,
+        Sabado,
+        Domingo
     }
 
     // Relaciones

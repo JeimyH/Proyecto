@@ -96,6 +96,14 @@ public class Usuario {
     @JsonIgnore
     private List<Recordatorio> recordatorios;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<RespuestaPlanificadorEdamam> respuestaPlanificadorEdamams;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<ModificacionRutinaChatbot> modificacionRutinaChatbots;
+
     // Uno a Uno
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
@@ -104,4 +112,5 @@ public class Usuario {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private ConfiguracionAplicacion configuracionAplicacion;
+
 }

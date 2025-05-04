@@ -51,6 +51,8 @@ public class ComidaRutinaIAService {
                     throw new IllegalArgumentException("El tipo de comida es obligatoria.");
                 }else if(comidaRutinaIA.getDiaNumero() == 0){
                     throw new IllegalArgumentException("El dia de consumo de la comida de la rutina es obligatorio.");
+                } else if (comidaRutinaIA.getDiaSemana() == null) {
+                    throw new IllegalArgumentException("El dia de la semana de la rutina es obligatorio.");
                 }
                 return  comidaRutinaIARepository.save(comidaRutinaIA);
             }
@@ -82,6 +84,7 @@ public class ComidaRutinaIAService {
             comidaRutinaIAExistente.setValoresNutricionales(comidaRutinaIAActualizado.getValoresNutricionales());
             comidaRutinaIAExistente.setTamanoPorciones(comidaRutinaIAActualizado.getTamanoPorciones());
             comidaRutinaIAExistente.setDiaNumero(comidaRutinaIAActualizado.getDiaNumero());
+            comidaRutinaIAExistente.setDiaSemana(comidaRutinaIAActualizado.getDiaSemana());
             return comidaRutinaIARepository.save(comidaRutinaIAExistente);
         }else{
             return null;
