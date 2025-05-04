@@ -14,7 +14,7 @@ public class RutinaAlimenticiaIAService {
     @Autowired
     public RutinaAlimenticiaIARepository rutinaRepository;
 
-    public List<RutinaAlimenticiaIA> listarRutinaAlimenticiaIA(){
+    public List<RutinaAlimenticiaIA> listarRutinasAlimenticiaIA(){
         // Validacion para intentar obtener la lista de las Rutinas AlimenticiaIA
         try {
             List<RutinaAlimenticiaIA> rutinaAlimenticiaIAS = rutinaRepository.findAll();
