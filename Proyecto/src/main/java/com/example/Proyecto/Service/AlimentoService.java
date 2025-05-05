@@ -3,6 +3,7 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.Alimento;
 import com.example.Proyecto.Repository.AlimentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -107,5 +108,21 @@ public class AlimentoService {
         }else{
             return null;
         }
+    }
+
+    public List<Alimento> obtenerAlimentoPorNombre(@Param("nombre") String nombre){
+        return alimentoRepository.buscarAlimentoPorNombre(nombre);
+    }
+
+    public List<Alimento> obtenerAlimentosPorCategoria(@Param("categoria") String categoria){
+        return alimentoRepository.filtrarAlimentosPorCategoria(categoria);
+    }
+
+    public List<Alimento> obtenerAlimentosPorUsuario(@Param("id_usuario") Integer id_usuario){
+        return alimentoRepository.consultarAlimentosPorUsuario(id_usuario);
+    }
+
+    public Alimento obtenerInfNutricional(@Param("id_alimento") Integer id_alimento){
+        return alimentoRepository.obtenerInformacionNutricional(id_alimento);
     }
 }
