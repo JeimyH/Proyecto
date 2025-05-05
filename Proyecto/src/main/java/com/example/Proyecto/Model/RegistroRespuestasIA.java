@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Setter
 @Getter
-@Table(name = "Respuesta_API_Alimentos")
+@Table(name = "Registro_Respuestas_IA")
 public class RegistroRespuestasIA {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

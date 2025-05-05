@@ -3,6 +3,7 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.Alimento;
 import com.example.Proyecto.Repository.AlimentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,6 +57,14 @@ public class AlimentoService {
                     throw new IllegalArgumentException("Las proteinas del alimento son obligatorias.");
                 }else if (alimento.getCarbohidratos() == 0) {
                     throw new IllegalArgumentException("Los carbohidratos del alimento son obligatorios.");
+                }else if (alimento.getAzucares() == 0) {
+                    throw new IllegalArgumentException("Los azucares del alimento son obligatorias.");
+                }else if (alimento.getFibra() == 0) {
+                    throw new IllegalArgumentException("La fibra del alimento son obligatorias.");
+                }else if (alimento.getSodio() == 0) {
+                    throw new IllegalArgumentException("El sodio del alimento son obligatorias.");
+                }else if (alimento.getGrasasSaturadas() == 0) {
+                    throw new IllegalArgumentException("Las grasas saturadas del alimento son obligatorias.");
                 }else if (alimento.getGrasas() == 0) {
                     throw new IllegalArgumentException("Las grasas del alimento son obligatorias.");
                 }
@@ -99,5 +108,21 @@ public class AlimentoService {
         }else{
             return null;
         }
+    }
+
+    public List<Alimento> obtenerAlimentoPorNombre(@Param("nombre") String nombre){
+        return alimentoRepository.buscarAlimentoPorNombre(nombre);
+    }
+
+    public List<Alimento> obtenerAlimentosPorCategoria(@Param("categoria") String categoria){
+        return alimentoRepository.filtrarAlimentosPorCategoria(categoria);
+    }
+
+    public List<Alimento> obtenerAlimentosPorUsuario(@Param("id_usuario") Integer id_usuario){
+        return alimentoRepository.consultarAlimentosPorUsuario(id_usuario);
+    }
+
+    public Alimento obtenerInfNutricional(@Param("id_alimento") Integer id_alimento){
+        return alimentoRepository.obtenerInformacionNutricional(id_alimento);
     }
 }

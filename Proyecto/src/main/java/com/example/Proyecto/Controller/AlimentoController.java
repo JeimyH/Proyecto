@@ -3,6 +3,7 @@ package com.example.Proyecto.Controller;
 import com.example.Proyecto.Model.Alimento;
 import com.example.Proyecto.Service.AlimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -72,4 +73,27 @@ public class AlimentoController {
         }
     }
 
+    @GetMapping("/alimentoNombre/{nombre}")
+    public ResponseEntity<List<Alimento>> obtenerAlimentoPorNombre (@Param("nombre") String nombre){
+        List<Alimento> alimentos = alimentoService.obtenerAlimentoPorNombre(nombre);
+        return new ResponseEntity<>(alimentos, HttpStatus.OK);
+    }
+
+    @GetMapping("/alimentoCategoria/{categoria}")
+    public ResponseEntity<List<Alimento>> obtenerAlimentosPorCategoria(@Param("categoria") String categoria){
+        List<Alimento> alimentos = alimentoService.obtenerAlimentosPorCategoria(categoria);
+        return new ResponseEntity<>(alimentos, HttpStatus.OK);
+    }
+
+    @GetMapping("/alimentosUsuario/{id_usuario}")
+    public ResponseEntity<List<Alimento>> obtenerAlimentosPorUsuario(@Param("id_usuario") Integer id_usuario){
+        List<Alimento> alimentos = alimentoService.obtenerAlimentosPorUsuario(id_usuario);
+        return new ResponseEntity<>(alimentos, HttpStatus.OK);
+    }
+
+    @GetMapping("/InfNutricional/{id_alimento}")
+    public ResponseEntity<Alimento> obtenerInfNutricional(@Param("id_alimento") Integer id_alimento){
+        Alimento alimento = alimentoService.obtenerInfNutricional(id_alimento);
+        return new ResponseEntity<>(alimento, HttpStatus.OK);
+    }
 }
