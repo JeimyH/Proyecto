@@ -56,6 +56,14 @@ public class AlimentoService {
                     throw new IllegalArgumentException("Las proteinas del alimento son obligatorias.");
                 }else if (alimento.getCarbohidratos() == 0) {
                     throw new IllegalArgumentException("Los carbohidratos del alimento son obligatorios.");
+                }else if (alimento.getAzucares() == 0) {
+                    throw new IllegalArgumentException("Los azucares del alimento son obligatorias.");
+                }else if (alimento.getFibra() == 0) {
+                    throw new IllegalArgumentException("La fibra del alimento son obligatorias.");
+                }else if (alimento.getSodio() == 0) {
+                    throw new IllegalArgumentException("El sodio del alimento son obligatorias.");
+                }else if (alimento.getGrasasSaturadas() == 0) {
+                    throw new IllegalArgumentException("Las grasas saturadas del alimento son obligatorias.");
                 }else if (alimento.getGrasas() == 0) {
                     throw new IllegalArgumentException("Las grasas del alimento son obligatorias.");
                 }

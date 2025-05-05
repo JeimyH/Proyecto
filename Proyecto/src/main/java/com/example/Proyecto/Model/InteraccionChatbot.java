@@ -26,9 +26,13 @@ public class InteraccionChatbot {
     @Column(name = "Respuesta_IA", nullable = false)
     private String respuestaIA;
 
-    @Column(name = "Origen")
+    @Column(name = "Tipo_Intento")
     @Enumerated(EnumType.STRING)
     private TipoIntento tipoIntento;
+
+    @Column(name = "Tipo_Accion")
+    @Enumerated(EnumType.STRING)
+    private TipoAccion tipoAccion;
 
     @Column(name = "Tema")
     private String tema;
@@ -40,6 +44,12 @@ public class InteraccionChatbot {
         Modificar_Rutina,
         Pregunta_Nutricional,
         Otros
+    }
+
+    public enum TipoAccion{
+        Modificar,
+        Agregar,
+        Eliminar
     }
 
     //Relaciones

@@ -35,16 +35,16 @@ public class Alimento {
     @Column(name = "Grasas", nullable = false)
     private float grasas;
 
-    @Column(name = "Azucares")
+    @Column(name = "Azucares", nullable = false)
     private float azucares;
 
-    @Column(name = "Fibra")
+    @Column(name = "Fibra", nullable = false)
     private float fibra;
 
-    @Column(name = "Sodio")
+    @Column(name = "Sodio", nullable = false)
     private float sodio;
 
-    @Column(name = "Grasas_Saturadas")
+    @Column(name = "Grasas_Saturadas", nullable = false)
     private float grasasSaturadas;
 
     @Column(name = "Categoria", length = 50)

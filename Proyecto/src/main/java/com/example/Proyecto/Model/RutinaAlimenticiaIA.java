@@ -56,5 +56,5 @@ public class RutinaAlimenticiaIA {
 
     @OneToMany(mappedBy = "rutina", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<RespuestaPlanificadorEdamam> respuestaPlanificadorEdamams;
+    private List<ModificacionRutinaChatbot> modificacionRutinaChatbots;
 }

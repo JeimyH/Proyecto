@@ -84,6 +84,7 @@ public class InteraccionChatbotService {
             interaccionExistente.setRespuestaIA(interaccionActualizado.getRespuestaIA());
             interaccionExistente.setTimestamp(interaccionActualizado.getTimestamp());
             interaccionExistente.setTipoIntento(interaccionActualizado.getTipoIntento());
+            interaccionExistente.setTipoAccion(interaccionActualizado.getTipoAccion());
             interaccionExistente.setTema(interaccionActualizado.getTema());
             return interaccionChatbotRepository.save(interaccionExistente);
         }else{
