@@ -3,6 +3,7 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.RespuestaPlanificadorEdamam;
 import com.example.Proyecto.Repository.RespuestaPlanificadorEdamamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -90,5 +91,17 @@ public class RespuestaPlanificadorEdamamService {
         }else{
             return null;
         }
+    }
+
+    public void obtenerRespuesta(@Param("id_usuario") Integer id_usuario, @Param("respuesta") String respuesta){
+        planificadorEdamamRepository.guardarRespuesta(id_usuario,respuesta);
+    }
+
+    public List<RespuestaPlanificadorEdamam> obtenerPlanAlimenticioPorFecha(@Param("fechaRegistro") String fechaRegistro, @Param("id_usuario") Integer id_usuario){
+        return planificadorEdamamRepository.consultarPlanAlimenticioPorFecha(fechaRegistro,id_usuario);
+    }
+
+    public List<RespuestaPlanificadorEdamam> obtenerRespuestaPorTipoYUsuario(@Param("tipoRespuesta") String tipoRespuesta, @Param("id_usuario") Integer id_usuario){
+        return planificadorEdamamRepository.buscarRespuestaPorTipoYUsuario(tipoRespuesta,id_usuario);
     }
 }

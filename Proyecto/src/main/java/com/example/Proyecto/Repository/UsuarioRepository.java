@@ -32,14 +32,14 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     // Actualizar datos personales
     @Modifying
-    @Query(value = "UPDATE Usuario SET nombre = :nombre, peso = :peso, altura = :altura, fechaNacimiento = :fechaNacimiento WHERE idUsuario = :idUsuario", nativeQuery = true)
-    void updateDatosPersonales(@Param("idUsuario") Integer idUsuario,
+    @Query(value = "UPDATE Usuario SET nombre = :nombre, peso = :peso, altura = :altura, fechaNacimiento = :fechaNacimiento WHERE id_usuario = :id_usuario", nativeQuery = true)
+    void updateDatosPersonales(@Param("id_usuario") Integer id_usuario,
                                @Param("nombre") String nombre,
                                @Param("peso") Float peso,
                                @Param("altura") Float altura,
                                @Param("fechaNacimiento") String fechaNacimiento);
 
     // Obtener preferencias y restricciones del usuario
-    @Query(value = "SELECT * FROM PreferenciasUsuario WHERE idUsuario = :idUsuario", nativeQuery = true)
-    PreferenciasUsuario findPreferenciasAndRestriccionesByUsuarioId(@Param("idUsuario") Integer idUsuario);
+    @Query(value = "SELECT * FROM PreferenciasUsuario WHERE id_usuario = :id_usuario", nativeQuery = true)
+    PreferenciasUsuario findPreferenciasAndRestriccionesByUsuarioId(@Param("id_usuario") Integer id_usuario);
 }

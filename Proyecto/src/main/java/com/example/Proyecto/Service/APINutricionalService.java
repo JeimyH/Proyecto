@@ -1,8 +1,10 @@
 package com.example.Proyecto.Service;
 
 import com.example.Proyecto.Model.APINutricional;
+import com.example.Proyecto.Model.Alimento;
 import com.example.Proyecto.Repository.APINutricionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -94,4 +96,15 @@ public class APINutricionalService {
         }
     }
 
+    public void obtenerAPIRegistrada(@Param("nombreApi") String nombreApi, @Param("version") String version){
+        apiNutricionalRepository.registrarApiUtilizada(nombreApi,version);
+    }
+
+    public String obtenerFechaActualizacion(@Param("id_api") Integer id_Api){
+        return apiNutricionalRepository.verificarFechaActualizacion(id_Api);
+    }
+
+    public String obtenerVersion(@Param("id_api")Integer id_Api){
+        return apiNutricionalRepository.consultarVersionOKeyActiva(id_Api);
+    }
 }

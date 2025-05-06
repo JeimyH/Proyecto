@@ -1,8 +1,10 @@
 package com.example.Proyecto.Service;
 
+import com.example.Proyecto.Model.PreferenciasUsuario;
 import com.example.Proyecto.Model.Usuario;
 import com.example.Proyecto.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -97,4 +99,35 @@ public class UsuarioService {
         }else{
             return null;
         }
-    }}
+    }
+
+    public Usuario obtenerPorCorreo(@Param("correo") String correo){
+        return usuarioRepository.findByCorreo(correo);
+    }
+
+    public Usuario obtenerLogin(@Param("correo") String correo, @Param("contrasena") String contrasena){
+        return usuarioRepository.validateLogin(correo,contrasena);
+    }
+
+    public PreferenciasUsuario obtenerPreferenciasPorUsuarioId(@Param("id_usuario") Integer id_usuario){
+        return usuarioRepository.findPreferenciasByUsuarioId(id_usuario);
+    }
+
+    public Usuario obtenerPorCorreoYContrasena(@Param("correo") String correo, @Param("contrasena") String contrasena){
+        return usuarioRepository.findByCorreoAndContrasena(correo,contrasena);
+    }
+
+    public int siExisteCorreo(@Param("correo") String correo){
+        return usuarioRepository.existsByCorreo(correo);
+    }
+
+    public void obtenerDatosPersonales(@Param("id_usuario") Integer id_usuario,@Param("nombre") String nombre,@Param("peso") Float peso,@Param("altura") Float altura,@Param("fechaNacimiento") String fechaNacimiento){
+        usuarioRepository.updateDatosPersonales(id_usuario,nombre,peso,altura,fechaNacimiento);
+    }
+
+
+    public PreferenciasUsuario obtenerPreferenciasYRestriccionesPorUsuarioId(@Param("id_usuario") Integer id_usuario){
+        return usuarioRepository.findPreferenciasAndRestriccionesByUsuarioId(id_usuario);
+    }
+
+}

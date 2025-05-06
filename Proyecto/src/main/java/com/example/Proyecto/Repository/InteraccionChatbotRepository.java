@@ -13,23 +13,23 @@ import java.util.List;
 public interface InteraccionChatbotRepository extends JpaRepository<InteraccionChatbot, Long> {
     // Registrar interacción del chatbot
     @Modifying
-    @Query(value = "INSERT INTO InteraccionChatbot (idSesion, mensajeUsuario, respuestaChatbot, tipoConsulta, fechaRegistro) VALUES (:idSesion, :mensajeUsuario, :respuestaChatbot, :tipoConsulta, CURRENT_TIMESTAMP)", nativeQuery = true)
-    void registrarInteraccion(@Param("idSesion") Integer idSesion,
+    @Query(value = "INSERT INTO InteraccionChatbot (id_sesion, mensajeUsuario, respuestaChatbot, tipoConsulta, fechaRegistro) VALUES (:id_sesion, :mensajeUsuario, :respuestaChatbot, :tipoConsulta, CURRENT_TIMESTAMP)", nativeQuery = true)
+    void registrarInteraccion(@Param("id_sesion") Integer id_sesion,
                               @Param("mensajeUsuario") String mensajeUsuario,
                               @Param("respuestaChatbot") String respuestaChatbot,
                               @Param("tipoConsulta") String tipoConsulta);
 
     // Obtener historial de interacciones
-    @Query(value = "SELECT * FROM InteraccionChatbot WHERE idSesion = :idSesion ORDER BY fechaRegistro DESC", nativeQuery = true)
-    List<InteraccionChatbot> obtenerHistorialInteracciones(@Param("idSesion") Integer idSesion);
+    @Query(value = "SELECT * FROM InteraccionChatbot WHERE id_sesion = :id_sesion ORDER BY fechaRegistro DESC", nativeQuery = true)
+    List<InteraccionChatbot> obtenerHistorialInteracciones(@Param("id_sesion") Integer id_sesion);
 
     // Consultar respuesta según tipo de consulta
-    @Query(value = "SELECT respuestaChatbot FROM InteraccionChatbot WHERE idSesion = :idSesion AND tipoConsulta = :tipoConsulta ORDER BY fechaRegistro DESC LIMIT 1", nativeQuery = true)
-    String consultarRespuestaPorTipo(@Param("idSesion") Integer idSesion, @Param("tipoConsulta") String tipoConsulta);
+    @Query(value = "SELECT respuestaChatbot FROM InteraccionChatbot WHERE id_sesion = :id_sesion AND tipoConsulta = :tipoConsulta ORDER BY fechaRegistro DESC LIMIT 1", nativeQuery = true)
+    String consultarRespuestaPorTipo(@Param("id_sesion") Integer id_sesion, @Param("tipoConsulta") String tipoConsulta);
 
     // Filtrar por fecha y tipo de respuesta
-    @Query(value = "SELECT * FROM InteraccionChatbot WHERE idSesion = :idSesion AND fechaRegistro BETWEEN :fechaInicio AND :fechaFin AND tipoConsulta = :tipoConsulta", nativeQuery = true)
-    List<InteraccionChatbot> filtrarPorFechaYTipo(@Param("idSesion") Integer idSesion,
+    @Query(value = "SELECT * FROM InteraccionChatbot WHERE id_sesion = :id_sesion AND fechaRegistro BETWEEN :fechaInicio AND :fechaFin AND tipoConsulta = :tipoConsulta", nativeQuery = true)
+    List<InteraccionChatbot> filtrarPorFechaYTipo(@Param("id_sesion") Integer id_sesion,
                                                   @Param("fechaInicio") String fechaInicio,
                                                   @Param("fechaFin") String fechaFin,
                                                   @Param("tipoConsulta") String tipoConsulta);

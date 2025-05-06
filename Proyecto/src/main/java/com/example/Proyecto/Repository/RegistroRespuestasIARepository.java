@@ -13,10 +13,10 @@ import java.util.List;
 public interface RegistroRespuestasIARepository extends JpaRepository<RegistroRespuestasIA, Long> {
     // Guardar respuesta generada por el chatbot
     @Modifying
-    @Query(value = "INSERT INTO RegistroRespuestasIA (idSesion, datosRespuesta, timestamp) VALUES (:idSesion, :datosRespuesta, CURRENT_TIMESTAMP)", nativeQuery = true)
-    void guardarRespuestaGenerada(@Param("idSesion") Integer idSesion, @Param("datosRespuesta") String datosRespuesta);
+    @Query(value = "INSERT INTO RegistroRespuestasIA (id_sesion, datosRespuesta, timestamp) VALUES (:id_sesion, :datosRespuesta, CURRENT_TIMESTAMP)", nativeQuery = true)
+    void guardarRespuestaGenerada(@Param("id_sesion") Integer id_sesion, @Param("datosRespuesta") String datosRespuesta);
 
     // Consultar respuestas anteriores por sesión
-    @Query(value = "SELECT * FROM RegistroRespuestasIA WHERE idSesion = :idSesion ORDER BY timestamp DESC", nativeQuery = true)
-    List<RegistroRespuestasIA> consultarRespuestasAnteriores(@Param("idSesion") Integer idSesion);
+    @Query(value = "SELECT * FROM RegistroRespuestasIA WHERE id_sesion = :id_sesion ORDER BY timestamp DESC", nativeQuery = true)
+    List<RegistroRespuestasIA> consultarRespuestasAnteriores(@Param("id_sesion") Integer id_sesion);
 }

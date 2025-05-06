@@ -3,6 +3,7 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.RegistrosSolicitudAPI;
 import com.example.Proyecto.Repository.RegistrosSolicitudAPIRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -88,5 +89,17 @@ public class RegistrosSolicitudAPIService {
         }else{
             return null;
         }
+    }
+
+    public void obtenerSolicitud(@Param("nombreApi") String nombreApi, @Param("solicitud") String solicitud){
+        solicitudAPIRepository.registrarSolicitud(nombreApi,solicitud);
+    }
+
+    public List<RegistrosSolicitudAPI> obtenerHistorialPorFecha(@Param("fechaInicio") String fechaInicio, @Param("fechaFin") String fechaFin){
+        return solicitudAPIRepository.obtenerHistorialPorFecha(fechaInicio,fechaFin);
+    }
+
+    public String obtenerRespuestasRecibidas(@Param("id_solicitud") Integer id_solicitud){
+        return solicitudAPIRepository.consultarRespuestasRecibidas(id_solicitud);
     }
 }

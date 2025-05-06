@@ -15,10 +15,10 @@ public interface APINutricionalRepository extends JpaRepository<APINutricional, 
     void registrarApiUtilizada(@Param("nombreApi") String nombreApi, @Param("version") String version);
 
     // Verificar fecha de actualización
-    @Query(value = "SELECT fechaRegistro FROM ApiNutricional WHERE idApi = :idApi", nativeQuery = true)
-    String verificarFechaActualizacion(@Param("idApi") Integer idApi);
+    @Query(value = "SELECT fechaRegistro FROM ApiNutricional WHERE id_api = :id_api", nativeQuery = true)
+    String verificarFechaActualizacion(@Param("id_api") Integer idApi);
 
     // Consultar versión o key activa
-    @Query(value = "SELECT version FROM ApiNutricional WHERE idApi = :idApi", nativeQuery = true)
-    String consultarVersionOKeyActiva(@Param("idApi") Integer idApi);
+    @Query(value = "SELECT version FROM ApiNutricional WHERE id_api = :id_api", nativeQuery = true)
+    String consultarVersionOKeyActiva(@Param("id_api") Integer idApi);
 }

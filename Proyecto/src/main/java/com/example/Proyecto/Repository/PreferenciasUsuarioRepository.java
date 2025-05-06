@@ -12,21 +12,21 @@ import java.util.List;
 @Repository
 public interface PreferenciasUsuarioRepository extends JpaRepository<PreferenciasUsuario, Long> {
     // Obtener preferencias alimenticias por usuario
-    @Query(value = "SELECT * FROM PreferenciasUsuario WHERE idUsuario = :idUsuario", nativeQuery = true)
-    List<PreferenciasUsuario> obtenerPreferenciasPorUsuario(@Param("idUsuario") Integer idUsuario);
+    @Query(value = "SELECT * FROM PreferenciasUsuario WHERE id_usuario = :id_usuario", nativeQuery = true)
+    List<PreferenciasUsuario> obtenerPreferenciasPorUsuario(@Param("id_usuario") Integer id_usuario);
 
     // Actualizar preferencias
     @Modifying
-    @Query(value = "UPDATE PreferenciasUsuario SET tipo = :tipo, valor = :valor WHERE idUsuario = :idUsuario AND tipo = :tipoAntiguo", nativeQuery = true)
-    void actualizarPreferencias(@Param("idUsuario") Integer idUsuario,
+    @Query(value = "UPDATE PreferenciasUsuario SET tipo = :tipo, valor = :valor WHERE id_usuario = :id_usuario AND tipo = :tipoAntiguo", nativeQuery = true)
+    void actualizarPreferencias(@Param("id_usuario") Integer id_usuario,
                                 @Param("tipo") String tipo,
                                 @Param("valor") String valor,
                                 @Param("tipoAntiguo") String tipoAntiguo);
 
     // Insertar nueva configuración del usuario
     @Modifying
-    @Query(value = "INSERT INTO PreferenciasUsuario (idUsuario, tipo, valor) VALUES (:idUsuario, :tipo, :valor)", nativeQuery = true)
-    void insertarNuevaConfiguracion(@Param("idUsuario") Integer idUsuario,
+    @Query(value = "INSERT INTO PreferenciasUsuario (id_usuario, tipo, valor) VALUES (:id_usuario, :tipo, :valor)", nativeQuery = true)
+    void insertarNuevaConfiguracion(@Param("id_usuario") Integer id_usuario,
                                     @Param("tipo") String tipo,
                                     @Param("valor") String valor);
 }

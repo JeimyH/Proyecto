@@ -14,23 +14,23 @@ import java.util.List;
 public interface ComidaRutinaIARepository extends JpaRepository<ComidaRutinaIA, Long> {
     // Obtener alimentos sugeridos por tipo de comida y fecha
     @Query(value = "SELECT A.* FROM ComidaRutinaIA CR " +
-            "JOIN ComidaRutinaIA_Alimento CRA ON CR.idComida = CRA.idComida " +
-            "JOIN Alimento A ON CRA.idAlimento = A.idAlimento " +
+            "JOIN ComidaRutinaIA_Alimento CRA ON CR.idComida = CRA.id_comida " +
+            "JOIN Alimento A ON CRA.id_alimento = A.id_alimento " +
             "WHERE CR.tipoComida = :tipoComida AND CR.fecha = :fecha", nativeQuery = true)
     List<Alimento> obtenerAlimentosSugeridos(@Param("tipoComida") String tipoComida, @Param("fecha") String fecha);
 
     // Actualizar valores nutricionales de comida
     @Modifying
-    @Query(value = "UPDATE ComidaRutinaIA SET valoresNutricionales = :valoresNutricionales WHERE idComida = :idComida", nativeQuery = true)
-    void actualizarValoresNutricionales(@Param("idComida") Integer idComida, @Param("valoresNutricionales") String valoresNutricionales);
+    @Query(value = "UPDATE ComidaRutinaIA SET valoresNutricionales = :valoresNutricionales WHERE id_comida = :id_comida", nativeQuery = true)
+    void actualizarValoresNutricionales(@Param("id_comida") Integer id_comida, @Param("valoresNutricionales") String valoresNutricionales);
 
     // Agregar alimento a una comida en rutina
     @Modifying
-    @Query(value = "INSERT INTO ComidaRutinaIA_Alimento (idComida, idAlimento, cantidad) VALUES (:idComida, :idAlimento, :cantidad)", nativeQuery = true)
-    void agregarAlimentoAComida(@Param("idComida") Integer idComida, @Param("idAlimento") Integer idAlimento, @Param("cantidad") Float cantidad);
+    @Query(value = "INSERT INTO ComidaRutinaIA_Alimento (id_comida, id_alimento, cantidad) VALUES (:id_comida, :id_alimento, :cantidad)", nativeQuery = true)
+    void agregarAlimentoAComida(@Param("id_comida") Integer id_comida, @Param("id_alimento") Integer id_alimento, @Param("cantidad") Float cantidad);
 
     // Eliminar alimento de una comida en rutina
     @Modifying
-    @Query(value = "DELETE FROM ComidaRutinaIA_Alimento WHERE idComida = :idComida AND idAlimento = :idAlimento", nativeQuery = true)
-    void eliminarAlimentoDeComida(@Param("idComida") Integer idComida, @Param("idAlimento") Integer idAlimento);
+    @Query(value = "DELETE FROM ComidaRutinaIA_Alimento WHERE id_comida = :id_comida AND id_alimento = :id_alimento", nativeQuery = true)
+    void eliminarAlimentoDeComida(@Param("id_comida") Integer id_comida, @Param("idAlimento") Integer id_alimento);
 }

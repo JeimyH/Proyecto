@@ -3,6 +3,7 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.RegistroAgua;
 import com.example.Proyecto.Repository.RegistroAguaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -84,5 +85,17 @@ public class RegistroAguaService {
         }else{
             return null;
         }
+    }
+
+    public void obtenerCantidadAgua(@Param("id_usuario") Integer id_usuario,@Param("Cantidadml") Float cantidad,@Param("registradoEn") String registradaEn){
+        registroAguaRepository.registrarCantidadAgua(id_usuario,cantidad,registradaEn);
+    }
+
+    public List<RegistroAgua> HistorialPorFecha(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha){
+        return registroAguaRepository.obtenerHistorialPorFecha(id_usuario,fecha);
+    }
+
+    public Float TotalConsumidoPorDia(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha){
+        return registroAguaRepository.obtenerTotalConsumidoPorDia(id_usuario,fecha);
     }
 }

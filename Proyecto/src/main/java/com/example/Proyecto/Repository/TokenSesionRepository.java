@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 public interface TokenSesionRepository extends JpaRepository<TokenSesion, Long> {
     // Generar token al iniciar sesión
     @Modifying
-    @Query(value = "INSERT INTO TokenSesion (idUsuario, token, fechaCreacion, fechaExpiracion) VALUES (:idUsuario, :token, CURRENT_TIMESTAMP, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 HOUR))", nativeQuery = true)
-    void generarToken(@Param("idUsuario") Integer idUsuario, @Param("token") String token);
+    @Query(value = "INSERT INTO TokenSesion (id_usuario, token, fechaCreacion, fechaExpiracion) VALUES (:id_usuario, :token, CURRENT_TIMESTAMP, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 HOUR))", nativeQuery = true)
+    void generarToken(@Param("id_usuario") Integer id_usuario, @Param("token") String token);
 
     // Validar token por expiración
     @Query(value = "SELECT CASE WHEN fechaExpiracion > CURRENT_TIMESTAMP THEN true ELSE false END FROM TokenSesion WHERE token = :token", nativeQuery = true)

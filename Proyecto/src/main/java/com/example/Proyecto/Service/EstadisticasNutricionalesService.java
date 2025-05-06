@@ -3,6 +3,7 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.EstadisticasNutricionales;
 import com.example.Proyecto.Repository.EstadisticasNutricionalesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -99,6 +100,22 @@ public class EstadisticasNutricionalesService {
         }else{
             return null;
         }
+    }
+
+    public EstadisticasNutricionales obtenerEstadisticasDiarias(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha){
+        return estadisticasNutricionalesRepository.calcularEstadisticasDiarias(id_usuario,fecha);
+    }
+
+    public List<EstadisticasNutricionales> obtenerProgresosSemanales(@Param("id_usuario") Integer id_usuario,@Param("fechaInicio") String fechaInicio,@Param("fechaFin") String fechaFin){
+        return estadisticasNutricionalesRepository.obtenerProgresoSemanal(id_usuario,fechaInicio,fechaFin);
+    }
+
+    public Float obtenerIMC(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha){
+        return estadisticasNutricionalesRepository.calcularIMC(id_usuario,fecha);
+    }
+
+    public Integer totalComidasRegistradas(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha){
+        return estadisticasNutricionalesRepository.obtenerTotalComidasRegistradas(id_usuario,fecha);
     }
 
 }

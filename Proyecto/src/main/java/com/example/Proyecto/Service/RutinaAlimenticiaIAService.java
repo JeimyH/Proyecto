@@ -3,6 +3,7 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.RutinaAlimenticiaIA;
 import com.example.Proyecto.Repository.RutinaAlimenticiaIARepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -92,4 +93,25 @@ public class RutinaAlimenticiaIAService {
             return null;
         }
     }
+
+    public RutinaAlimenticiaIA RutinaPorUsuarioYFecha(@Param("idUsuario") Integer idUsuario, @Param("fecha") String fecha){
+        return rutinaRepository.obtenerRutinaPorUsuarioYFecha(idUsuario,fecha);
+    }
+
+    public void obtenerNuevaRutina(@Param("id_usuario") Integer id_usuario,@Param("fechaInicio") String fechaInicio,@Param("fechaFin") String fechaFin,@Param("objetivoCaloricoDiario") Float objetivoCaloricoDiario,@Param("detalles") String detalles){
+        rutinaRepository.crearNuevaRutina(id_usuario,fechaInicio,fechaFin,objetivoCaloricoDiario,detalles);
+    }
+
+    public void obtenerRutina(@Param("id_rutina") Integer id_rutina,@Param("fechaInicio") String fechaInicio,@Param("fechaFin") String fechaFin,@Param("objetivoCaloricoDiario") Float objetivoCaloricoDiario,@Param("detalles") String detalles){
+        rutinaRepository.actualizarRutina(id_rutina,fechaInicio,fechaFin,objetivoCaloricoDiario,detalles);
+    }
+
+    public List<RutinaAlimenticiaIA> obtenerDetallesRutinaSemanal(@Param("id_usuario") Integer id_usuario,@Param("fechaInicio") String fechaInicio,@Param("fechaFin") String fechaFin){
+        return rutinaRepository.consultarDetallesRutinaSemanal(id_usuario,fechaInicio,fechaFin);
+    }
+
+    public RutinaAlimenticiaIA RutinaPorDiaEspecifico(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha){
+        return rutinaRepository.obtenerRutinaPorDiaEspecifico(id_usuario,fecha);
+    }
+
 }

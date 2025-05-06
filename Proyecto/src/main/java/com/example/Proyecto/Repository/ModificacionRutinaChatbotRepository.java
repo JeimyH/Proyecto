@@ -13,8 +13,8 @@ import java.util.List;
 public interface ModificacionRutinaChatbotRepository extends JpaRepository<ModificacionRutinaChatbot, Long> {
     // Registrar modificación de rutina (agregar, eliminar, cambiar alimento)
     @Modifying
-    @Query(value = "INSERT INTO ModificacionRespuestaChatbot (idSesion, tipoModificacion, descripcion, fechaRegistro) VALUES (:idSesion, :tipoModificacion, :descripcion, CURRENT_TIMESTAMP)", nativeQuery = true)
-    void registrarModificacion(@Param("idSesion") Integer idSesion,
+    @Query(value = "INSERT INTO ModificacionRespuestaChatbot (id_sesion, tipoModificacion, descripcion, fechaRegistro) VALUES (:id_sesion, :tipoModificacion, :descripcion, CURRENT_TIMESTAMP)", nativeQuery = true)
+    void registrarModificacion(@Param("id_sesion") Integer id_sesion,
                                @Param("tipoModificacion") String tipoModificacion,
                                @Param("descripcion") String descripcion);
 

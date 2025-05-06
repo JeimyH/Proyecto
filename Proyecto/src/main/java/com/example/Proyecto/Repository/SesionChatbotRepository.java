@@ -13,20 +13,20 @@ import java.util.List;
 @Repository
 public interface SesionChatbotRepository extends JpaRepository<SesionChatbot, Long> {
     // Obtener sesiones activas del usuario
-    @Query(value = "SELECT * FROM SesionChatbot WHERE idUsuario = :idUsuario AND estado = 'ACTIVA'", nativeQuery = true)
-    List<SesionChatbot> obtenerSesionesActivas(@Param("idUsuario") Integer idUsuario);
+    @Query(value = "SELECT * FROM SesionChatbot WHERE id_usuario = :id_usuario AND estado = 'ACTIVA'", nativeQuery = true)
+    List<SesionChatbot> obtenerSesionesActivas(@Param("id_usuario") Integer id_usuario);
 
     // Crear nueva sesión
     @Modifying
-    @Query(value = "INSERT INTO SesionChatbot (idUsuario, estado, fechaInicio) VALUES (:idUsuario, 'ACTIVA', CURRENT_TIMESTAMP)", nativeQuery = true)
-    void crearNuevaSesion(@Param("idUsuario") Integer idUsuario);
+    @Query(value = "INSERT INTO SesionChatbot (id_usuario, estado, fechaInicio) VALUES (:id_usuario, 'ACTIVA', CURRENT_TIMESTAMP)", nativeQuery = true)
+    void crearNuevaSesion(@Param("id_usuario") Integer id_usuario);
 
     // Finalizar sesión
     @Modifying
-    @Query(value = "UPDATE SesionChatbot SET estado = 'FINALIZADA', fechaFin = CURRENT_TIMESTAMP WHERE idSesion = :idSesion", nativeQuery = true)
-    void finalizarSesion(@Param("idSesion") Integer idSesion);
+    @Query(value = "UPDATE SesionChatbot SET estado = 'FINALIZADA', fechaFin = CURRENT_TIMESTAMP WHERE id_sesion = :id_sesion", nativeQuery = true)
+    void finalizarSesion(@Param("id_sesion") Integer id_sesion);
 
     // Obtener mensajes y recomendaciones anteriores
-    @Query(value = "SELECT * FROM InteraccionChatbot WHERE idSesion = :idSesion ORDER BY fechaRegistro DESC", nativeQuery = true)
-    List<InteraccionChatbot> obtenerMensajesYRecomendaciones(@Param("idSesion") Integer idSesion);
+    @Query(value = "SELECT * FROM InteraccionChatbot WHERE id_sesion = :id_sesion ORDER BY fechaRegistro DESC", nativeQuery = true)
+    List<InteraccionChatbot> obtenerMensajesYRecomendaciones(@Param("id_sesion") Integer id_sesion);
 }

@@ -126,3 +126,4 @@ public class AlimentoService {
         return alimentoRepository.obtenerInformacionNutricional(id_alimento);
     }
 }
+

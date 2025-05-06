@@ -3,6 +3,7 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.Recordatorio;
 import com.example.Proyecto.Repository.RecordatorioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -80,5 +81,17 @@ public class RecordatorioService {
         }else{
             return null;
         }
+    }
+
+    public void obtenerNuevoRecordatorio(@Param("descripcion") String descripcion,@Param("hora") String hora,@Param("tipo") String tipo){
+        recordatorioRepository.insertarNuevoRecordatorio(descripcion,hora,tipo);
+    }
+
+    public void obtenerDesactivarRecordatorio(@Param("id_recordatorio") Integer id_recordatorio, @Param("activo") boolean activo){
+        recordatorioRepository.activarDesactivarRecordatorio(id_recordatorio,activo);
+    }
+
+    public List<Recordatorio> obtenerRecordatoriosPorHoraOTipo(@Param("hora") String hora, @Param("tipo") String tipo){
+        return recordatorioRepository.buscarRecordatoriosPorHoraOTipo(hora,tipo);
     }
 }

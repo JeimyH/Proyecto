@@ -20,8 +20,8 @@ public interface RecordatorioRepository extends JpaRepository<Recordatorio, Long
 
     // Activar/desactivar recordatorios
     @Modifying
-    @Query(value = "UPDATE Recordatorio SET activo = :activo WHERE idRecordatorio = :idRecordatorio", nativeQuery = true)
-    void activarDesactivarRecordatorio(@Param("idRecordatorio") Integer idRecordatorio, @Param("activo") boolean activo);
+    @Query(value = "UPDATE Recordatorio SET activo = :activo WHERE id_recordatorio = :id_recordatorio", nativeQuery = true)
+    void activarDesactivarRecordatorio(@Param("id_recordatorio") Integer id_recordatorio, @Param("activo") boolean activo);
 
     // Obtener recordatorios activos
     @Query(value = "SELECT * FROM Recordatorio WHERE activo = true", nativeQuery = true)

@@ -12,18 +12,19 @@ import java.util.List;
 @Repository
 public interface ConfiguracionAplicacionRepository extends JpaRepository<ConfiguracionAplicacion, Long> {
     // Obtener configuraciones del usuario
-    @Query(value = "SELECT * FROM ConfiguracionAplicacion WHERE idUsuario = :idUsuario", nativeQuery = true)
-    List<ConfiguracionAplicacion> obtenerConfiguracionesDelUsuario(@Param("idUsuario") Integer idUsuario);
+    @Query(value = "SELECT * FROM ConfiguracionAplicacion WHERE id_usuario = :id_usuario", nativeQuery = true)
+    List<ConfiguracionAplicacion> obtenerConfiguracionesDelUsuario(@Param("id_usuario") Integer id_usuario);
 
     // Actualizar idioma o unidades
     @Modifying
-    @Query(value = "UPDATE ConfiguracionAplicacion SET idioma = :idioma, unidades = :unidades WHERE idUsuario = :idUsuario", nativeQuery = true)
-    void actualizarIdiomaOUnidades(@Param("idUsuario") Integer idUsuario,
+    @Query(value = "UPDATE ConfiguracionAplicacion SET idioma = :idioma, unidades = :unidades WHERE id_usuario = :id_usuario", nativeQuery = true)
+    void actualizarIdiomaOUnidades(@Param("id_usuario") Integer id_usuario,
                                    @Param("idioma") String idioma,
                                    @Param("unidades") String unidades);
 
     // Activar/desactivar notificaciones
     @Modifying
-    @Query(value = "UPDATE ConfiguracionAplicacion SET notificacionesActivadas = :activadas WHERE idUsuario = :idUsuario", nativeQuery = true)
-    void activarDesactivarNotificaciones(@Param("idUsuario") Integer idUsuario, @Param("activadas") boolean activadas);
+    @Query(value = "UPDATE ConfiguracionAplicacion SET notificaciones = :activadas WHERE id_usuario = :id_usuario", nativeQuery = true)
+    void activarDesactivarNotificaciones(@Param("id_usuario") Integer id_usuario, @Param("activadas") boolean activadas);
+
 }

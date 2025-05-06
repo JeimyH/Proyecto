@@ -12,34 +12,34 @@ import java.util.List;
 @Repository
 public interface RutinaAlimenticiaIARepository extends JpaRepository<RutinaAlimenticiaIA, Long> {
     // Obtener rutina alimenticia por usuario y fecha
-    @Query(value = "SELECT * FROM RutinaAlimenticiaIA WHERE idUsuario = :idUsuario AND fechaInicio <= :fecha AND fechaFin >= :fecha", nativeQuery = true)
-    RutinaAlimenticiaIA obtenerRutinaPorUsuarioYFecha(@Param("idUsuario") Integer idUsuario, @Param("fecha") String fecha);
+    @Query(value = "SELECT * FROM RutinaAlimenticiaIA WHERE id_usuario = :id_usuario AND fechaInicio <= :fecha AND fechaFin >= :fecha", nativeQuery = true)
+    RutinaAlimenticiaIA obtenerRutinaPorUsuarioYFecha(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha);
 
     // Crear nueva rutina
     @Modifying
-    @Query(value = "INSERT INTO RutinaAlimenticiaIA (idUsuario, fechaInicio, fechaFin, objetivoCaloricoDiario, detalles, createdAt, actualizado) VALUES (:idUsuario, :fechaInicio, :fechaFin, :objetivoCaloricoDiario, :detalles, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)", nativeQuery = true)
-    void crearNuevaRutina(@Param("idUsuario") Integer idUsuario,
+    @Query(value = "INSERT INTO RutinaAlimenticiaIA (id_usuario, fechaInicio, fechaFin, objetivoCaloricoDia, detalles, createdAt, actualizado) VALUES (:id_usuario, :fechaInicio, :fechaFin, :objetivoCaloricoDia, :detalles, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)", nativeQuery = true)
+    void crearNuevaRutina(@Param("id_usuario") Integer id_usuario,
                           @Param("fechaInicio") String fechaInicio,
                           @Param("fechaFin") String fechaFin,
-                          @Param("objetivoCaloricoDiario") Float objetivoCaloricoDiario,
+                          @Param("objetivoCaloricoDia") Float objetivoCaloricoDia,
                           @Param("detalles") String detalles);
 
     // Actualizar rutina
     @Modifying
-    @Query(value = "UPDATE RutinaAlimenticiaIA SET fechaInicio = :fechaInicio, fechaFin = :fechaFin, objetivoCaloricoDiario = :objetivoCaloricoDiario, detalles = :detalles, actualizado = CURRENT_TIMESTAMP WHERE idRutina = :idRutina", nativeQuery = true)
-    void actualizarRutina(@Param("idRutina") Integer idRutina,
+    @Query(value = "UPDATE RutinaAlimenticiaIA SET fechaInicio = :fechaInicio, fechaFin = :fechaFin, objetivoCaloricoDia = :objetivoCaloricoDia, detalles = :detalles, actualizado = CURRENT_TIMESTAMP WHERE idRutina = :idRutina", nativeQuery = true)
+    void actualizarRutina(@Param("id_rutina") Integer id_rutina,
                           @Param("fechaInicio") String fechaInicio,
                           @Param("fechaFin") String fechaFin,
-                          @Param("objetivoCaloricoDiario") Float objetivoCaloricoDiario,
+                          @Param("objetivoCaloricoDia") Float objetivoCaloricoDia,
                           @Param("detalles") String detalles);
 
     // Consultar detalles de rutina semanal
-    @Query(value = "SELECT * FROM RutinaAlimenticiaIA WHERE idUsuario = :idUsuario AND fechaInicio <= :fechaFin AND fechaFin >= :fechaInicio", nativeQuery = true)
-    List<RutinaAlimenticiaIA> consultarDetallesRutinaSemanal(@Param("idUsuario") Integer idUsuario,
+    @Query(value = "SELECT * FROM RutinaAlimenticiaIA WHERE id_usuario = :id_usuario AND fechaInicio <= :fechaFin AND fechaFin >= :fechaInicio", nativeQuery = true)
+    List<RutinaAlimenticiaIA> consultarDetallesRutinaSemanal(@Param("id_usuario") Integer id_usuario,
                                                              @Param("fechaInicio") String fechaInicio,
                                                              @Param("fechaFin") String fechaFin);
 
     // Obtener rutina por día específico
-    @Query(value = "SELECT * FROM RutinaAlimenticiaIA WHERE idUsuario = :idUsuario AND fechaInicio <= :fecha AND fechaFin >= :fecha", nativeQuery = true)
-    RutinaAlimenticiaIA obtenerRutinaPorDiaEspecifico(@Param("idUsuario") Integer idUsuario, @Param("fecha") String fecha);
+    @Query(value = "SELECT * FROM RutinaAlimenticiaIA WHERE id_usuario = :id_usuario AND fechaInicio <= :fecha AND fechaFin >= :fecha", nativeQuery = true)
+    RutinaAlimenticiaIA obtenerRutinaPorDiaEspecifico(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha);
 }

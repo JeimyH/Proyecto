@@ -21,6 +21,6 @@ public interface RegistrosSolicitudAPIRepository extends JpaRepository<Registros
     List<RegistrosSolicitudAPI> obtenerHistorialPorFecha(@Param("fechaInicio") String fechaInicio, @Param("fechaFin") String fechaFin);
 
     // Consultar respuestas recibidas (caché)
-    @Query(value = "SELECT respuesta FROM RegistroSolicitudApi WHERE idSolicitud = :idSolicitud", nativeQuery = true)
-    String consultarRespuestasRecibidas(@Param("idSolicitud") Integer idSolicitud);
+    @Query(value = "SELECT respuesta FROM RegistroSolicitudApi WHERE id_solicitud = :id_solicitud", nativeQuery = true)
+    String consultarRespuestasRecibidas(@Param("id_solicitud") Integer id_solicitud);
 }

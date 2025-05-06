@@ -3,6 +3,7 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.RegistroRespuestasIA;
 import com.example.Proyecto.Repository.RegistroRespuestasIARepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -85,4 +86,13 @@ public class RegistroRespuestasIAService {
             return null;
         }
     }
+
+    public void obtenerRespuestaGenerada(@Param("id_sesion") Integer id_sesion, @Param("datosRespuesta") String datosRespuesta){
+        respuestasIARepository.guardarRespuestaGenerada(id_sesion,datosRespuesta);
+    }
+
+   public List<RegistroRespuestasIA> obtenerRespuestasAnteriores(@Param("id_sesion") Integer id_sesion){
+        return respuestasIARepository.consultarRespuestasAnteriores(id_sesion);
+   }
+
 }
