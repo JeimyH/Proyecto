@@ -3,8 +3,10 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.RutinaAlimenticiaIA;
 import com.example.Proyecto.Repository.RutinaAlimenticiaIARepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -43,6 +45,8 @@ public class RutinaAlimenticiaIAService {
     }
 
     public RutinaAlimenticiaIA guardarRutinaAlimenticiaIA(RutinaAlimenticiaIA rutinaAlimenticiaIA){
+        // Inicializa el campo creadoEn
+        rutinaAlimenticiaIA.setCreadoEn(new Timestamp(System.currentTimeMillis()));
         try{
             if(rutinaAlimenticiaIA==null){
                 throw new IllegalArgumentException("La Rutina AlimenticiaIA no puede ser nula");
@@ -84,12 +88,31 @@ public class RutinaAlimenticiaIAService {
             rutinaExistente.setFechaFin(rutinaActualizado.getFechaFin());
             rutinaExistente.setObjetivoCaloricoDia(rutinaActualizado.getObjetivoCaloricoDia());
             rutinaExistente.setDetalles(rutinaActualizado.getDetalles());
-            rutinaExistente.setCreadoEn(rutinaActualizado.getCreadoEn());
-            rutinaExistente.setActualizadoEn(rutinaActualizado.getActualizadoEn());
+            rutinaExistente.setActualizadoEn(new Timestamp(System.currentTimeMillis()));
             rutinaExistente.setDias(rutinaActualizado.getDias());
             return rutinaRepository.save(rutinaExistente);
         }else{
             return null;
         }
+    }
+
+    public RutinaAlimenticiaIA RutinaPorUsuarioYFecha(@Param("idUsuario") Integer idUsuario, @Param("fecha") String fecha){
+        return rutinaRepository.obtenerRutinaPorUsuarioYFecha(idUsuario,fecha);
+    }
+
+    public void obtenerNuevaRutina(@Param("id_usuario") Integer id_usuario,@Param("fechaInicio") String fechaInicio,@Param("fechaFin") String fechaFin,@Param("objetivoCaloricoDiario") Float objetivoCaloricoDiario,@Param("detalles") String detalles){
+        rutinaRepository.crearNuevaRutina(id_usuario,fechaInicio,fechaFin,objetivoCaloricoDiario,detalles);
+    }
+
+    public void obtenerRutina(@Param("id_rutina") Integer id_rutina,@Param("fechaInicio") String fechaInicio,@Param("fechaFin") String fechaFin,@Param("objetivoCaloricoDiario") Float objetivoCaloricoDiario,@Param("detalles") String detalles){
+        rutinaRepository.actualizarRutina(id_rutina,fechaInicio,fechaFin,objetivoCaloricoDiario,detalles);
+    }
+
+    public List<RutinaAlimenticiaIA> obtenerDetallesRutinaSemanal(@Param("id_usuario") Integer id_usuario,@Param("fechaInicio") String fechaInicio,@Param("fechaFin") String fechaFin){
+        return rutinaRepository.consultarDetallesRutinaSemanal(id_usuario,fechaInicio,fechaFin);
+    }
+
+    public RutinaAlimenticiaIA RutinaPorDiaEspecifico(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha){
+        return rutinaRepository.obtenerRutinaPorDiaEspecifico(id_usuario,fecha);
     }
 }

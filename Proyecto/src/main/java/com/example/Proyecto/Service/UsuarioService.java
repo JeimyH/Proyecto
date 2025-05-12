@@ -1,10 +1,13 @@
 package com.example.Proyecto.Service;
 
+import com.example.Proyecto.Model.PreferenciasUsuario;
 import com.example.Proyecto.Model.Usuario;
 import com.example.Proyecto.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -43,6 +46,8 @@ public class UsuarioService {
     }
 
     public Usuario guardarUsuario(Usuario usuario){
+        // Inicializa el campo creadoEn
+        usuario.setCreadoEn(new Timestamp(System.currentTimeMillis()));
         try{
             if(usuario==null){
                 throw new IllegalArgumentException("El usuario no puede ser nulo");
@@ -58,11 +63,13 @@ public class UsuarioService {
                     throw new IllegalArgumentException("La altura del usuario es obligatorio.");
                 } else if (usuario.getPeso()==0) {
                     throw new IllegalArgumentException("El peso del usuario es obligatorio.");
+                }else if (usuario.getCreadoEn() == null) {
+                    throw new IllegalArgumentException("La fecha de creacion del usuario es obligatoria.");
                 }
                 return  usuarioRepository.save(usuario);
             }
         }catch (Exception e){
-            throw new RuntimeException("Error al intentar guardar el equipo" + e.getMessage(), e);
+            throw new RuntimeException("Error al intentar guardar el usuario " + e.getMessage(), e);
         }
     }
 
@@ -92,9 +99,39 @@ public class UsuarioService {
             usuarioExistente.setPeso(usuarioActualizado.getPeso());
             usuarioExistente.setRestriccionesDieta(usuarioActualizado.getRestriccionesDieta());
             usuarioExistente.setObjetivosSalud(usuarioActualizado.getObjetivosSalud());
-            usuarioExistente.setCreadoEn(usuarioActualizado.getCreadoEn());
+            //usuarioExistente.setCreadoEn(usuarioActualizado.getCreadoEn());
+            usuarioExistente.setActualizadoEn(new Timestamp(System.currentTimeMillis()));
             return usuarioRepository.save(usuarioExistente);
         }else{
             return null;
         }
-    }}
+    }
+
+    public Usuario obtenerPorCorreo(@Param("correo") String correo){
+        return usuarioRepository.findByCorreo(correo);
+    }
+
+    public Usuario obtenerLogin(@Param("correo") String correo, @Param("contrasena") String contrasena){
+        return usuarioRepository.validateLogin(correo,contrasena);
+    }
+
+    public PreferenciasUsuario obtenerPreferenciasPorUsuarioId(@Param("id_usuario") Integer id_usuario){
+        return usuarioRepository.findPreferenciasByUsuarioId(id_usuario);
+    }
+
+    public Usuario obtenerPorCorreoYContrasena(@Param("correo") String correo, @Param("contrasena") String contrasena){
+        return usuarioRepository.findByCorreoAndContrasena(correo,contrasena);
+    }
+
+    public int siExisteCorreo(@Param("correo") String correo){
+        return usuarioRepository.existsByCorreo(correo);
+    }
+
+    public void obtenerDatosPersonales(@Param("id_usuario") Integer id_usuario,@Param("nombre") String nombre,@Param("peso") Float peso,@Param("altura") Float altura,@Param("fechaNacimiento") String fechaNacimiento){
+        usuarioRepository.updateDatosPersonales(id_usuario,nombre,peso,altura,fechaNacimiento);
+    }
+
+    public PreferenciasUsuario obtenerPreferenciasYRestriccionesPorUsuarioId(@Param("id_usuario") Integer id_usuario){
+        return usuarioRepository.findPreferenciasAndRestriccionesByUsuarioId(id_usuario);
+    }
+}

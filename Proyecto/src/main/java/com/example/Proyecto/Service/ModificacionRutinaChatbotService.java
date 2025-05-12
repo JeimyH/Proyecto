@@ -3,6 +3,7 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.ModificacionRutinaChatbot;
 import com.example.Proyecto.Repository.ModificacionRutinaChatbotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -88,5 +89,17 @@ public class ModificacionRutinaChatbotService {
         }else{
             return null;
         }
+    }
+
+    public void obtenerModificacion(@Param("id_sesion") Integer id_sesion, @Param("tipoModificacion") String tipoModificacion, @Param("descripcion") String descripcion){
+        modificacionRepository.registrarModificacion(id_sesion,tipoModificacion,descripcion);
+    }
+
+    public List<ModificacionRutinaChatbot> obtenerHistorialPorFechaa(@Param("fechaInicio") String fechaInicio,@Param("fechaFin") String fechaFin){
+        return modificacionRepository.obtenerHistorialPorFecha(fechaInicio,fechaFin);
+    }
+
+    public List<ModificacionRutinaChatbot> obtenerPorTipoModificacion(@Param("tipoModificacion") String tipoModificacion){
+        return modificacionRepository.filtrarPorTipoModificacion(tipoModificacion);
     }
 }

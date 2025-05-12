@@ -3,6 +3,7 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.TokenSesion;
 import com.example.Proyecto.Repository.TokenSesionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -85,5 +86,17 @@ public class TokenSesionService {
         }else{
             return null;
         }
+    }
+
+    public void obtenerToken(@Param("id_usuario") Integer id_usuario, @Param("token") String token){
+        tokenRepository.generarToken(id_usuario,token);
+    }
+
+    public boolean obtenerTokenPorExpiracion(@Param("token") String token){
+        return tokenRepository.validarTokenPorExpiracion(token);
+    }
+
+    public void obtenerTokenActivo(@Param("token") String token){
+        tokenRepository.revocarTokenActivo(token);
     }
 }

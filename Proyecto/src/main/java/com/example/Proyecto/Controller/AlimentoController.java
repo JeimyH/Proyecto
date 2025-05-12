@@ -73,27 +73,35 @@ public class AlimentoController {
         }
     }
 
-    @GetMapping("/alimentoNombre/{nombre}")
-    public ResponseEntity<List<Alimento>> obtenerAlimentoPorNombre (@Param("nombre") String nombre){
-        List<Alimento> alimentos = alimentoService.obtenerAlimentoPorNombre(nombre);
-        return new ResponseEntity<>(alimentos, HttpStatus.OK);
-    }
-
     @GetMapping("/alimentoCategoria/{categoria}")
-    public ResponseEntity<List<Alimento>> obtenerAlimentosPorCategoria(@Param("categoria") String categoria){
+    public ResponseEntity<List<Alimento>> obtenerAlimentosPorCategoria(@PathVariable String categoria) {
         List<Alimento> alimentos = alimentoService.obtenerAlimentosPorCategoria(categoria);
-        return new ResponseEntity<>(alimentos, HttpStatus.OK);
+        if (alimentos != null && !alimentos.isEmpty()) {
+            return ResponseEntity.ok(alimentos);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/alimentosUsuario/{id_usuario}")
-    public ResponseEntity<List<Alimento>> obtenerAlimentosPorUsuario(@Param("id_usuario") Integer id_usuario){
+    public ResponseEntity<List<Alimento>> obtenerAlimentosPorUsuario(@Param("id_usuario") Long id_usuario){
         List<Alimento> alimentos = alimentoService.obtenerAlimentosPorUsuario(id_usuario);
         return new ResponseEntity<>(alimentos, HttpStatus.OK);
     }
 
     @GetMapping("/InfNutricional/{id_alimento}")
-    public ResponseEntity<Alimento> obtenerInfNutricional(@Param("id_alimento") Integer id_alimento){
+    public ResponseEntity<Alimento> obtenerInfNutricional(@Param("id_alimento") Long id_alimento){
         Alimento alimento = alimentoService.obtenerInfNutricional(id_alimento);
         return new ResponseEntity<>(alimento, HttpStatus.OK);
+    }
+
+    @GetMapping("/alimentoNombre/{nombre}")
+    public ResponseEntity<Alimento> obtenerAlimento(@PathVariable String nombre) {
+        Alimento alimento = alimentoService.obtenerAlimentoPorNombre(nombre);
+        if (alimento != null) {
+            return ResponseEntity.ok(alimento);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

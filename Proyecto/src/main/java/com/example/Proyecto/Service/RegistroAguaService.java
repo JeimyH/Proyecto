@@ -3,8 +3,10 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.RegistroAgua;
 import com.example.Proyecto.Repository.RegistroAguaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -43,6 +45,8 @@ public class RegistroAguaService {
     }
 
     public RegistroAgua guardarRegistroAgua(RegistroAgua registroAgua){
+        // Inicializa el campo creadoEn
+        registroAgua.setRegistradoEn(new Timestamp(System.currentTimeMillis()));
         try{
             if(registroAgua==null){
                 throw new IllegalArgumentException("El Registro de Agua no puede ser nulo");
@@ -79,10 +83,22 @@ public class RegistroAguaService {
         if(registroAguaOpt.isPresent()){
             RegistroAgua registroAguaExistente = registroAguaOpt.get();
             registroAguaExistente.setCantidadml(registroAguaActualizado.getCantidadml());
-            registroAguaExistente.setRegistradoEn(registroAguaActualizado.getRegistradoEn());
+            registroAguaExistente.setRegistradoEn(new Timestamp(System.currentTimeMillis()));
             return registroAguaRepository.save(registroAguaExistente);
         }else{
             return null;
         }
+    }
+
+    public void obtenerCantidadAgua(@Param("id_usuario") Integer id_usuario, @Param("Cantidadml") Float cantidad, @Param("registradoEn") String registradaEn){
+        registroAguaRepository.registrarCantidadAgua(id_usuario,cantidad,registradaEn);
+    }
+
+    public List<RegistroAgua> HistorialPorFecha(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha){
+        return registroAguaRepository.obtenerHistorialPorFecha(id_usuario,fecha);
+    }
+
+    public Float TotalConsumidoPorDia(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha){
+        return registroAguaRepository.obtenerTotalConsumidoPorDia(id_usuario,fecha);
     }
 }

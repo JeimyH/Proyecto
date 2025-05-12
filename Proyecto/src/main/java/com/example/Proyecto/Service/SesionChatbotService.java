@@ -1,8 +1,10 @@
 package com.example.Proyecto.Service;
 
+import com.example.Proyecto.Model.InteraccionChatbot;
 import com.example.Proyecto.Model.SesionChatbot;
 import com.example.Proyecto.Repository.SesionChatbotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -84,5 +86,21 @@ public class SesionChatbotService {
         }else{
             return null;
         }
+    }
+
+    public List<SesionChatbot> sesionesActivas(@Param("id_usuario") Integer id_usuario){
+        return sesionRepository.obtenerSesionesActivas(id_usuario);
+    }
+
+    public void obtenerNuevaSesion(@Param("id_usuario") Integer id_usuario){
+        sesionRepository.crearNuevaSesion(id_usuario);
+    }
+
+    public void obtenerFinalizarSesion(@Param("id_sesion") Integer id_sesion){
+        sesionRepository.finalizarSesion(id_sesion);
+    }
+
+    public List<InteraccionChatbot> mensajesYRecomendaciones(@Param("id_sesion") Integer id_sesion){
+        return sesionRepository.obtenerMensajesYRecomendaciones(id_sesion);
     }
 }

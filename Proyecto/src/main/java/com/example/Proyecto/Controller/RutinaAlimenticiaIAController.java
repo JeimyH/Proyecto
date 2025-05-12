@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/RutinaAlimenticiaIA")
+@RequestMapping("/api/RutinaIA")
 public class RutinaAlimenticiaIAController {
     @Autowired
     public RutinaAlimenticiaIAService rutinaIAService;

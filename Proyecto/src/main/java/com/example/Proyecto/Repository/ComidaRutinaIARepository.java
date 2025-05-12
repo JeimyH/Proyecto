@@ -33,4 +33,7 @@ public interface ComidaRutinaIARepository extends JpaRepository<ComidaRutinaIA, 
     @Modifying
     @Query(value = "DELETE FROM ComidaRutinaIA_Alimento WHERE idComida = :idComida AND idAlimento = :idAlimento", nativeQuery = true)
     void eliminarAlimentoDeComida(@Param("idComida") Integer idComida, @Param("idAlimento") Integer idAlimento);
+
+
+
 }
