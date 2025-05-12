@@ -53,6 +53,11 @@ public class Usuario {
     @Column(name = "Actualizado_En")
     private Timestamp actualizadoEn;
 
+    /*@PrePersist
+    protected void onCreate() {
+        this.creadoEn = new Timestamp(System.currentTimeMillis());
+    }*/
+
     // Relaciones entre tablas
     // Uno a muchos
 
@@ -68,17 +73,14 @@ public class Usuario {
     @JsonIgnore
     private List<RutinaAlimenticiaIA> rutinaAlimenticiaIAS;
 
+    /*
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Alimento> alimentos;
-
+     */
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<EstadisticasNutricionales> estadisticasNutricionales;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<RegistrosSolicitudAPI> registrosSolicitudAPIS;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
@@ -95,10 +97,6 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Recordatorio> recordatorios;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<RespuestaPlanificadorEdamam> respuestaPlanificadorEdamams;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore

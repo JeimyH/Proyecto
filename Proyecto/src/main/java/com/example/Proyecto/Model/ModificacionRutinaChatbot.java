@@ -33,7 +33,7 @@ public class ModificacionRutinaChatbot {
     @Column(name = "Motivo", columnDefinition = "TEXT")
     private String motivo;
 
-    private enum Accion{
+    public enum Accion{
         Agregar,
         Eliminar,
         Cambiar

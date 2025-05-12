@@ -3,8 +3,10 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.ConfiguracionAplicacion;
 import com.example.Proyecto.Repository.ConfiguracionAplicacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -43,6 +45,8 @@ public class ConfiguracionAplicacionService {
     }
 
     public ConfiguracionAplicacion guardarConfiguracionAplicacion(ConfiguracionAplicacion configuracionAplicacion){
+        // Inicializa el campo creadoEn
+        configuracionAplicacion.setCreadoEn(new Timestamp(System.currentTimeMillis()));
         try{
             if(configuracionAplicacion==null){
                 throw new IllegalArgumentException("La configuracion de la aplicacion no puede ser nula");
@@ -81,5 +85,17 @@ public class ConfiguracionAplicacionService {
         }else{
             return null;
         }
+    }
+
+    public List<ConfiguracionAplicacion> obtenerConfiguracionesDeUsuario(@Param("id_usuario") Integer id_usuario){
+        return configuracionAplicacionRepository.obtenerConfiguracionesDelUsuario(id_usuario);
+    }
+
+    public void actualizarIdiomaOUnidades(@Param("id_usuario") Integer id_usuario, @Param("idioma") String idioma, @Param("unidades") String unidades){
+        configuracionAplicacionRepository.actualizarIdiomaOUnidades(id_usuario,idioma,unidades);
+    }
+
+    public void activarDesactivarNotificacion(@Param("id_usuario") Integer id_usuario, @Param("activadas") boolean activadas){
+        configuracionAplicacionRepository.activarDesactivarNotificaciones(id_usuario,activadas);
     }
 }

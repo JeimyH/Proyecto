@@ -43,6 +43,11 @@ public class RutinaAlimenticiaIA {
     @Column(name = "Actualizado_En")
     private Timestamp actualizadoEn;
 
+    /*@PrePersist
+    protected void onCreate() {
+        this.creadoEn = new Timestamp(System.currentTimeMillis());
+    }*/
+
     //Relaciones
 
     @ManyToOne

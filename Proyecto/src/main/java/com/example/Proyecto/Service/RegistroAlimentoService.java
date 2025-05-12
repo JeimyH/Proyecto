@@ -3,8 +3,10 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.RegistroAlimento;
 import com.example.Proyecto.Repository.RegistroAlimentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -43,6 +45,8 @@ public class RegistroAlimentoService {
     }
 
     public RegistroAlimento guardarRegistroAlimento(RegistroAlimento registroAlimento){
+        // Inicializa el campo creadoEn
+        registroAlimento.setConsumidoEn(new Timestamp(System.currentTimeMillis()));
         try{
             if(registroAlimento==null){
                 throw new IllegalArgumentException("El Registro del Alimento no puede ser nulo");
@@ -79,11 +83,27 @@ public class RegistroAlimentoService {
         if(registroAlimentoOpt.isPresent()){
             RegistroAlimento registroAlimentoExistente = registroAlimentoOpt.get();
             registroAlimentoExistente.setTamanoPorcion(registroAlimentoActualizado.getTamanoPorcion());
-            registroAlimentoExistente.setUrlImagen(registroAlimentoActualizado.getUrlImagen());
-            registroAlimentoExistente.setConsumidoEn(registroAlimentoActualizado.getConsumidoEn());
+            //registroAlimentoExistente.setUrlImagen(registroAlimentoActualizado.getUrlImagen());
+            registroAlimentoExistente.setConsumidoEn(new Timestamp(System.currentTimeMillis()));
             return registroAlimentoRepository.save(registroAlimentoExistente);
         }else{
             return null;
         }
+    }
+
+    public void obtenerAlimentoConsumido(@Param("id_usuario") Integer id_usuario, @Param("id_alimento") Integer id_alimento, @Param("tamanoPorcion") Float tamanoPorcion, @Param("consumidoEn") String consumidoEn){
+        registroAlimentoRepository.registrarAlimentoConsumido(id_usuario,id_alimento,tamanoPorcion,consumidoEn);
+    }
+
+    public List<RegistroAlimento> obtenerHistorialPorFecha(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha){
+        return registroAlimentoRepository.obtenerHistorialPorFecha(id_usuario, fecha);
+    }
+
+    public List<Object[]> obtenerTotalesDiarios(@Param("id_usuario") Integer id_usuario, @Param("fecha") String fecha){
+        return registroAlimentoRepository.calcularTotalesDiarios(id_usuario,fecha);
+    }
+
+    public void obtenerEliminarRegistroAlimento(@Param("id_registroAlimento") Integer id_registroAlimento){
+        registroAlimentoRepository.eliminarRegistroAlimento(id_registroAlimento);
     }
 }

@@ -1,8 +1,10 @@
 package com.example.Proyecto.Service;
 
+import com.example.Proyecto.Model.Alimento;
 import com.example.Proyecto.Model.ComidaRutinaIA;
 import com.example.Proyecto.Repository.ComidaRutinaIARepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -89,5 +91,21 @@ public class ComidaRutinaIAService {
         }else{
             return null;
         }
+    }
+
+    public List<Alimento>alimentosSugeridos(@Param("tipoComida") String tipoComida, @Param("fecha") String fecha) {
+        return comidaRutinaIARepository.obtenerAlimentosSugeridos(tipoComida,fecha);
+    }
+
+    public void obtenerValoresNutricionales(@Param("id_comida") Integer id_comida, @Param("valoresNutricionales") String valoresNutricionales){
+        comidaRutinaIARepository.actualizarValoresNutricionales(id_comida,valoresNutricionales);
+    }
+
+    public void obtenerAlimentoAComida(@Param("id_comida") Integer id_comida, @Param("id_alimento") Integer id_alimento, @Param("cantidad") Float cantidad){
+        comidaRutinaIARepository.agregarAlimentoAComida(id_comida,id_alimento,cantidad);
+    }
+
+    public void eliminarAlimentoDeComidas(@Param("id_comida") Integer id_comida, @Param("id_alimento") Integer id_alimento){
+        comidaRutinaIARepository.eliminarAlimentoDeComida(id_comida,id_alimento);
     }
 }

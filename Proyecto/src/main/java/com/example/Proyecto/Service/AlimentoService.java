@@ -47,29 +47,17 @@ public class AlimentoService {
         try{
             if(alimento==null){
                 throw new IllegalArgumentException("El alimento no puede ser nulo");
-
-            }else{
-                if (alimento.getNombreAlimento() == null || alimento.getNombreAlimento().isEmpty()) {
-                    throw new IllegalArgumentException("El nombre del alimento es obligatorio.");
-                }else if(alimento.getCalorias() == 0 ){
-                    throw new IllegalArgumentException("Las caloriasa del alimento son obligatorias.");
-                }else if (alimento.getProteinas() == 0) {
-                    throw new IllegalArgumentException("Las proteinas del alimento son obligatorias.");
-                }else if (alimento.getCarbohidratos() == 0) {
-                    throw new IllegalArgumentException("Los carbohidratos del alimento son obligatorios.");
-                }else if (alimento.getAzucares() == 0) {
-                    throw new IllegalArgumentException("Los azucares del alimento son obligatorias.");
-                }else if (alimento.getFibra() == 0) {
-                    throw new IllegalArgumentException("La fibra del alimento son obligatorias.");
-                }else if (alimento.getSodio() == 0) {
-                    throw new IllegalArgumentException("El sodio del alimento son obligatorias.");
-                }else if (alimento.getGrasasSaturadas() == 0) {
-                    throw new IllegalArgumentException("Las grasas saturadas del alimento son obligatorias.");
-                }else if (alimento.getGrasas() == 0) {
-                    throw new IllegalArgumentException("Las grasas del alimento son obligatorias.");
-                }
-                return  alimentoRepository.save(alimento);
             }
+            if (alimento.getNombreAlimento() == null || alimento.getNombreAlimento().isEmpty()) {
+                throw new IllegalArgumentException("El nombre del alimento es obligatorio.");
+            }else if(alimento.getCalorias() <= 0 ){
+                throw new IllegalArgumentException("Las caloriasa del alimento son obligatorias.");
+            }
+            // Validar que no se repita el alimento
+            if (alimentoRepository.existeAlimento(alimento.getNombreAlimento())) {
+                throw new IllegalArgumentException("El alimento ya existe en el sistema.");
+            }
+            return  alimentoRepository.save(alimento);
         }catch (Exception e){
             throw new RuntimeException("Error al intentar guardar el alimento" + e.getMessage(), e);
         }
@@ -103,26 +91,26 @@ public class AlimentoService {
             alimentoExistente.setSodio(alimentoActualizado.getSodio());
             alimentoExistente.setGrasasSaturadas(alimentoActualizado.getGrasasSaturadas());
             alimentoExistente.setCategoria(alimentoActualizado.getCategoria());
-            alimentoExistente.setOrigen(alimentoActualizado.getOrigen());
+            alimentoExistente.setUrlImagen(alimentoActualizado.getUrlImagen());
             return alimentoRepository.save(alimentoExistente);
         }else{
             return null;
         }
     }
 
-    public List<Alimento> obtenerAlimentoPorNombre(@Param("nombre") String nombre){
-        return alimentoRepository.buscarAlimentoPorNombre(nombre);
-    }
-
     public List<Alimento> obtenerAlimentosPorCategoria(@Param("categoria") String categoria){
         return alimentoRepository.filtrarAlimentosPorCategoria(categoria);
     }
 
-    public List<Alimento> obtenerAlimentosPorUsuario(@Param("id_usuario") Integer id_usuario){
+    public List<Alimento> obtenerAlimentosPorUsuario(@Param("id_usuario") Long id_usuario){
         return alimentoRepository.consultarAlimentosPorUsuario(id_usuario);
     }
 
-    public Alimento obtenerInfNutricional(@Param("id_alimento") Integer id_alimento){
+    public Alimento obtenerInfNutricional(@Param("id_alimento") Long id_alimento){
         return alimentoRepository.obtenerInformacionNutricional(id_alimento);
+    }
+
+    public Alimento obtenerAlimentoPorNombre(String nombre) {
+        return alimentoRepository.BuscarPorNombreAlimento(nombre);
     }
 }

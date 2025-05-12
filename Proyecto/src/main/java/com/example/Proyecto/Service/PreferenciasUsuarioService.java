@@ -3,6 +3,7 @@ package com.example.Proyecto.Service;
 import com.example.Proyecto.Model.PreferenciasUsuario;
 import com.example.Proyecto.Repository.PreferenciasUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -80,5 +81,17 @@ public class PreferenciasUsuarioService {
         }else{
             return null;
         }
+    }
+
+    public List<PreferenciasUsuario> obtenerPreferenciaPorUsuario(@Param("id_usuario") Integer id_usuario){
+        return preferenciaRepository.obtenerPreferenciasPorUsuario(id_usuario);
+    }
+
+    public void obtenerPreferencias(@Param("id_usuario") Integer id_usuario,@Param("tipo") String tipo,@Param("valor") String valor,@Param("tipoAntiguo") String tipoAntiguo){
+        preferenciaRepository.actualizarPreferencias(id_usuario,tipo,valor,tipo);
+    }
+
+    public void obtenerNuevaConfiguracion(@Param("id_usuario") Integer id_usuario,@Param("tipo") String tipo,@Param("valor") String valor){
+        preferenciaRepository.insertarNuevaConfiguracion(id_usuario,tipo,valor);
     }
 }

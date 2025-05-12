@@ -26,9 +26,12 @@ public class RegistroAlimento {
     @Column(name = "Consumido_En", nullable = false)
     private Timestamp consumidoEn;
 
-    @Column(name = "URL_Imagen", nullable = false)
-    private String urlImagen;
+    /*@PrePersist
+    protected void onCreate() {
+        this.consumidoEn = new Timestamp(System.currentTimeMillis());
+    }*/
 
+    //Relaciones entre tablas
     @ManyToOne
     @JoinColumn(name="id_usuario", nullable = false)
     @JsonIgnore

@@ -10,19 +10,22 @@ import java.util.List;
 
 @Repository
 public interface AlimentoRepository extends JpaRepository<Alimento, Long> {
-    // Buscar alimento por nombre
-    @Query(value = "SELECT * FROM Alimento WHERE nombreAlimento LIKE %:nombre%", nativeQuery = true)
-    List<Alimento> buscarAlimentoPorNombre(@Param("nombre") String nombre);
-
     // Filtrar alimentos por categoría
     @Query(value = "SELECT * FROM Alimento WHERE categoria = :categoria", nativeQuery = true)
     List<Alimento> filtrarAlimentosPorCategoria(@Param("categoria") String categoria);
 
     // Consultar alimentos creados por usuario
     @Query(value = "SELECT * FROM Alimento WHERE creador = :id_usuario", nativeQuery = true)
-    List<Alimento> consultarAlimentosPorUsuario(@Param("id_usuario") Integer id_usuario);
+    List<Alimento> consultarAlimentosPorUsuario(@Param("id_usuario") Long id_usuario);
 
     // Obtener información nutricional de un alimento
     @Query(value = "SELECT * FROM Alimento WHERE id_alimento = :id_alimento", nativeQuery = true)
-    Alimento obtenerInformacionNutricional(@Param("id_alimento") Integer id_alimento);
+    Alimento obtenerInformacionNutricional(@Param("id_alimento") Long id_alimento);
+
+    // Metodo para verificar si un alimento existe por su nombre usando una consulta nativa
+    @Query(value = "SELECT CASE WHEN COUNT(a) > 0 THEN TRUE ELSE FALSE END FROM Alimento a WHERE a.nombre_alimento = :nombreAlimento", nativeQuery = true)
+    boolean existeAlimento(@Param("nombreAlimento") String nombreAlimento);
+
+    @Query(value = "SELECT * FROM Alimento WHERE nombre_alimento = :nombre", nativeQuery = true)
+    Alimento BuscarPorNombreAlimento(@Param("nombre") String nombre);
 }
