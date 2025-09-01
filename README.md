@@ -1,2 +1,1 @@
-# Proyecto
 # Proyecto_Backend
