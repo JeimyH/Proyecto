@@ -1,14 +1,13 @@
 package com.example.Proyecto.Service;
 
-import com.example.Proyecto.Model.PreferenciasUsuario;
+import com.example.Proyecto.DTO.UsuarioEntradaDTO;
 import com.example.Proyecto.Model.Usuario;
 import com.example.Proyecto.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -17,20 +16,8 @@ public class UsuarioService {
     @Autowired
     public UsuarioRepository usuarioRepository;
 
-    public List<Usuario> listarUsuarios(){
-        // Validacion para intentar obtener la lista de los usuarios
-        try {
-            List<Usuario> usuarios = usuarioRepository.findAll();
-            // Validar que la lista no sea nula
-            if (usuarios == null) {
-                throw new IllegalStateException("No se encontraron usuarios.");
-            }
-            return usuarios;
-        } catch (Exception e) {
-            // Manejo de excepciones
-            throw new RuntimeException("Error al listar usuarios: " + e.getMessage(), e);
-        }
-    }
+    @Autowired
+    public PasswordEncoder passwordEncoder;
 
     public Optional<Usuario> listarPorIdUsuario(long id_usuario){
         try {
@@ -45,32 +32,42 @@ public class UsuarioService {
         }
     }
 
-    public Usuario guardarUsuario(Usuario usuario){
-        // Inicializa el campo creadoEn
-        usuario.setCreadoEn(new Timestamp(System.currentTimeMillis()));
-        try{
-            if(usuario==null){
-                throw new IllegalArgumentException("El usuario no puede ser nulo");
-
-            }else{
-                if (usuario.getNombre() == null || usuario.getNombre().isEmpty()) {
-                    throw new IllegalArgumentException("El nombre del usuario es obligatorio.");
-                }else if(usuario.getContrasena()== null || usuario.getContrasena().isEmpty()){
-                    throw new IllegalArgumentException("La contraseña del usuario es obligatorio.");
-                }else if(usuario.getCorreo()==null || usuario.getCorreo().isEmpty()) {
-                    throw new IllegalArgumentException("El correo del usuario es obligatorio.");
-                } else if (usuario.getAltura()==0) {
-                    throw new IllegalArgumentException("La altura del usuario es obligatorio.");
-                } else if (usuario.getPeso()==0) {
-                    throw new IllegalArgumentException("El peso del usuario es obligatorio.");
-                }else if (usuario.getCreadoEn() == null) {
-                    throw new IllegalArgumentException("La fecha de creacion del usuario es obligatoria.");
-                }
-                return  usuarioRepository.save(usuario);
-            }
-        }catch (Exception e){
-            throw new RuntimeException("Error al intentar guardar el usuario " + e.getMessage(), e);
+    public Usuario registrarUsuario(UsuarioEntradaDTO dto) {
+        if (usuarioRepository.existsByCorreo(dto.getCorreo())) {
+            throw new IllegalArgumentException("El correo ya está registrado");
         }
+
+        if (usuarioRepository.existsByNombre(dto.getNombre())) {
+            throw new IllegalArgumentException("El nombre de usuario ya está en uso");
+        }
+
+        Usuario nuevo = new Usuario();
+        nuevo.setCorreo(dto.getCorreo());
+        nuevo.setContrasena(passwordEncoder.encode(dto.getContrasena()));
+        nuevo.setNombre(dto.getNombre());
+        nuevo.setFechaNacimiento(dto.getFechaNacimiento());
+        nuevo.setAltura(dto.getAltura());
+        nuevo.setPeso(dto.getPeso());
+        nuevo.setSexo(dto.getSexo());
+        nuevo.setPesoObjetivo(dto.getPesoObjetivo());
+        nuevo.setObjetivosSalud(dto.getObjetivosSalud());
+        nuevo.setRestriccionesDieta(dto.getRestriccionesDieta());
+        nuevo.setNivelActividad(dto.getNivelActividad());
+        nuevo.setCreadoEn(new Timestamp(System.currentTimeMillis()));
+
+        return usuarioRepository.save(nuevo);
+    }
+    
+    public Usuario autenticar(String correo, String contrasena) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreo(correo);
+
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            if (passwordEncoder.matches(contrasena, usuario.getContrasena())) {
+                return usuario; // Login exitoso
+            }
+        }
+        return null; // Usuario no encontrado o contraseña incorrecta
     }
 
     public void eliminarUsuario(long id_usuario){
@@ -99,7 +96,7 @@ public class UsuarioService {
             usuarioExistente.setPeso(usuarioActualizado.getPeso());
             usuarioExistente.setRestriccionesDieta(usuarioActualizado.getRestriccionesDieta());
             usuarioExistente.setObjetivosSalud(usuarioActualizado.getObjetivosSalud());
-            //usuarioExistente.setCreadoEn(usuarioActualizado.getCreadoEn());
+            usuarioExistente.setSexo(usuarioActualizado.getSexo());
             usuarioExistente.setActualizadoEn(new Timestamp(System.currentTimeMillis()));
             return usuarioRepository.save(usuarioExistente);
         }else{
@@ -107,31 +104,70 @@ public class UsuarioService {
         }
     }
 
-    public Usuario obtenerPorCorreo(@Param("correo") String correo){
-        return usuarioRepository.findByCorreo(correo);
+    public Usuario actualizarAltura(long id_usuario, Float alturaActualizada){
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(id_usuario);
+        if(usuarioOpt.isPresent()){
+            Usuario usuarioExistente = usuarioOpt.get();
+            usuarioExistente.setAltura(alturaActualizada);
+            usuarioExistente.setActualizadoEn(new Timestamp(System.currentTimeMillis()));
+            return usuarioRepository.save(usuarioExistente);
+        }else{
+            return null;
+        }
     }
 
-    public Usuario obtenerLogin(@Param("correo") String correo, @Param("contrasena") String contrasena){
-        return usuarioRepository.validateLogin(correo,contrasena);
+    public Usuario actualizarPeso(long id_usuario, Float pesoActualizado){
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(id_usuario);
+        if(usuarioOpt.isPresent()){
+            Usuario usuarioExistente = usuarioOpt.get();
+            usuarioExistente.setPeso(pesoActualizado);
+            usuarioExistente.setActualizadoEn(new Timestamp(System.currentTimeMillis()));
+            return usuarioRepository.save(usuarioExistente);
+        }else{
+            return null;
+        }
     }
 
-    public PreferenciasUsuario obtenerPreferenciasPorUsuarioId(@Param("id_usuario") Integer id_usuario){
-        return usuarioRepository.findPreferenciasByUsuarioId(id_usuario);
+    public Usuario actualizarPesoObjetivo(long id_usuario, Float pesoObjetivoActualizado){
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(id_usuario);
+        if(usuarioOpt.isPresent()){
+            Usuario usuarioExistente = usuarioOpt.get();
+            usuarioExistente.setPesoObjetivo(pesoObjetivoActualizado);
+            usuarioExistente.setActualizadoEn(new Timestamp(System.currentTimeMillis()));
+            return usuarioRepository.save(usuarioExistente);
+        }else{
+            return null;
+        }
     }
 
-    public Usuario obtenerPorCorreoYContrasena(@Param("correo") String correo, @Param("contrasena") String contrasena){
-        return usuarioRepository.findByCorreoAndContrasena(correo,contrasena);
+    public Usuario actualizarDieta(long id_usuario, String dietaActualizada){
+        return usuarioRepository.findById(id_usuario) .map(u -> {
+            u.setRestriccionesDieta(dietaActualizada);
+            u.setActualizadoEn(new Timestamp(System.currentTimeMillis()));
+            return usuarioRepository.save(u); }) .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
+
     }
 
-    public int siExisteCorreo(@Param("correo") String correo){
-        return usuarioRepository.existsByCorreo(correo);
+    public Usuario actualizarObjetivo(long id_usuario, String objetivoActualizado){
+        return usuarioRepository.findById(id_usuario) .map(u -> {
+            u.setObjetivosSalud(objetivoActualizado);
+            u.setActualizadoEn(new Timestamp(System.currentTimeMillis()));
+            return usuarioRepository.save(u); }) .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
+
     }
 
-    public void obtenerDatosPersonales(@Param("id_usuario") Integer id_usuario,@Param("nombre") String nombre,@Param("peso") Float peso,@Param("altura") Float altura,@Param("fechaNacimiento") String fechaNacimiento){
-        usuarioRepository.updateDatosPersonales(id_usuario,nombre,peso,altura,fechaNacimiento);
+    public Usuario actualizarNivelActividad(long id_usuario, String nivelActividadActualizado){
+        return usuarioRepository.findById(id_usuario) .map(u -> {
+            u.setNivelActividad(nivelActividadActualizado);
+            u.setActualizadoEn(new Timestamp(System.currentTimeMillis()));
+            return usuarioRepository.save(u); }) .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
+
     }
 
-    public PreferenciasUsuario obtenerPreferenciasYRestriccionesPorUsuarioId(@Param("id_usuario") Integer id_usuario){
-        return usuarioRepository.findPreferenciasAndRestriccionesByUsuarioId(id_usuario);
+    public Usuario actualizarCorreo(long idUsuario, String correoActualizado) {
+        return usuarioRepository.findById(idUsuario) .map(u -> {
+            u.setCorreo(correoActualizado);
+            u.setActualizadoEn(new Timestamp(System.currentTimeMillis()));
+            return usuarioRepository.save(u); }) .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
     }
 }

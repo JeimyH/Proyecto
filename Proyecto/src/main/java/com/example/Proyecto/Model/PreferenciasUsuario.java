@@ -18,15 +18,19 @@ import java.util.List;
 public class PreferenciasUsuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_preferencia;
+    @Column(name = "id_preferencia")
+    private Long idPreferencia;
 
     @Column(name = "Objetivo_Agua_Diario")
-    private float objetivoAguaDiario;
+    private Float objetivoAguaDiario;
 
-    @Column(name = "Comidas_Preferidas")
+    @Column(name = "Comidas_Preferidas", columnDefinition = "TEXT")
     private String comidasPreferidas;
 
-    @Column(name = "Alimentos_Excluidos")
+    @Column(name = "nutrientes_recomendados", columnDefinition = "TEXT")
+    private String nutrientesRecomendados;
+
+    @Column(name = "Alimentos_Excluidos", columnDefinition = "TEXT")
     private String alimentosExcluidos;
 
     @Column(name = "Configuraciones_Notificaciones")

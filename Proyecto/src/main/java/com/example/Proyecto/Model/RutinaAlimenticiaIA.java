@@ -1,5 +1,6 @@
 package com.example.Proyecto.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,16 +21,19 @@ import java.util.List;
 public class RutinaAlimenticiaIA {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_rutina;
+    @Column(name = "id_rutina")
+    private Long idRutina;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "Fecha_Inicio", nullable = false)
     private LocalDate fechaInicio;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "Fecha_Fin")
     private LocalDate fechaFin;
 
     @Column(name = "Objetivo_Calorico_Dia", nullable = false)
-    private float objetivoCaloricoDia;
+    private Float objetivoCaloricoDia;
 
     @Column(name = "Dias")
     private String dias;

@@ -18,20 +18,10 @@ public class AlimentoController {
     @Autowired
     public AlimentoService alimentoService;
 
-    @GetMapping("/listar")
-    public ResponseEntity<List<Alimento>> listarAlimentos() {
-        List<Alimento> alimentos = alimentoService.listarAlimentos();
-        // Verificar si la lista está vacía
-        if (alimentos.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 No Content
-        }
-        return new ResponseEntity<>(alimentos, HttpStatus.OK); // 200 OK
-    }
-
-    @GetMapping("/buscar/{id_alimento}")
-    public ResponseEntity<Alimento> listarPorIdAlimento(@PathVariable long id_alimento){
+    @GetMapping("/buscar/{idAlimento}")
+    public ResponseEntity<Alimento> listarPorIdAlimento(@PathVariable long idAlimento){
         try {
-            Optional<Alimento> alimentoOpt = alimentoService.listarPorIdAlimento(id_alimento);
+            Optional<Alimento> alimentoOpt = alimentoService.listarPorIdAlimento(idAlimento);
             return alimentoOpt.map(alimento -> new ResponseEntity<>(alimento, HttpStatus.OK))
                     .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND)); // 404 Not Found
         } catch (IllegalArgumentException e) {
@@ -100,6 +90,44 @@ public class AlimentoController {
         Alimento alimento = alimentoService.obtenerAlimentoPorNombre(nombre);
         if (alimento != null) {
             return ResponseEntity.ok(alimento);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<Alimento>> listarTodos() {
+        return ResponseEntity.ok(alimentoService.listarAlimentos());
+    }
+
+    @GetMapping("/buscar/nombre/{nombre}")
+    public ResponseEntity<Alimento> buscarPorNombre(@PathVariable String nombre) {
+        Alimento alimento = alimentoService.obtenerAlimentoPorNombre(nombre);
+        return alimento != null ? ResponseEntity.ok(alimento) : ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/favoritoAgregar/{idUsuario}/{idAlimento}")
+    public ResponseEntity<?> agregarFavorito(@PathVariable Long idUsuario, @PathVariable Long idAlimento) {
+        alimentoService.agregarFavorito(idUsuario, idAlimento);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/favoritoEliminar/{idUsuario}/{idAlimento}")
+    public ResponseEntity<?> eliminarFavorito(@PathVariable Long idUsuario, @PathVariable Long idAlimento) {
+        alimentoService.eliminarFavorito(idUsuario, idAlimento);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/favoritos/{idUsuario}")
+    public ResponseEntity<List<Alimento>> obtenerFavoritos(@PathVariable Long idUsuario) {
+        return ResponseEntity.ok(alimentoService.obtenerFavoritos(idUsuario));
+    }
+
+    @GetMapping("/imagen")
+    public ResponseEntity<String> obtenerUrlImagenPorNombre(@RequestParam("nombre") String nombreAlimento) {
+        String urlImagen = alimentoService.obtenerUrlImagenPorNombre(nombreAlimento);
+        if (urlImagen != null) {
+            return ResponseEntity.ok(urlImagen);
         } else {
             return ResponseEntity.notFound().build();
         }

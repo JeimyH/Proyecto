@@ -6,23 +6,33 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RegistroAguaRepository extends JpaRepository<RegistroAgua, Long> {
-    // Registrar cantidad de agua
+
+    Optional<RegistroAgua> findByUsuario_IdUsuarioAndFecha(Long idUsuario, LocalDate fecha);
+
     @Modifying
-    @Query(value = "INSERT INTO RegistroAgua (idUsuario, cantidad, registradaEn) VALUES (:idUsuario, :cantidad, :registradaEn)", nativeQuery = true)
-    void registrarCantidadAgua(@Param("idUsuario") Integer idUsuario,
-                               @Param("cantidad") Float cantidad,
-                               @Param("registradaEn") String registradaEn);
+    @Transactional
+    @Query("DELETE FROM RegistroAgua r WHERE r.usuario.idUsuario = :idUsuario AND r.fecha = :fecha")
+    void eliminarRegistroPorUsuarioYFecha(
+            @Param("idUsuario") Long idUsuario,
+            @Param("fecha") LocalDate fecha
+    );
 
-    // Obtener historial de agua por fecha
-    @Query(value = "SELECT * FROM RegistroAgua WHERE idUsuario = :idUsuario AND DATE(registradaEn) = :fecha", nativeQuery = true)
-    List<RegistroAgua> obtenerHistorialPorFecha(@Param("idUsuario") Integer idUsuario, @Param("fecha") String fecha);
+    @Query("SELECT DISTINCT r.fecha FROM RegistroAgua r WHERE r.usuario.id = :idUsuario")
+    List<LocalDate> findFechasAguaPorUsuario(@Param("idUsuario") Long idUsuario);
 
-    // Obtener cantidad total consumida por día
-    @Query(value = "SELECT SUM(cantidad) FROM RegistroAgua WHERE idUsuario = :idUsuario AND DATE(registradaEn) = :fecha", nativeQuery = true)
-    Float obtenerTotalConsumidoPorDia(@Param("idUsuario") Integer idUsuario, @Param("fecha") String fecha);
+    @Query("SELECT COALESCE(SUM(r.cantidadml), 0) " +
+            "FROM RegistroAgua r " +
+            "WHERE r.usuario.id = :idUsuario AND r.fecha = :fecha")
+    int obtenerTotalAguaPorFecha(@Param("idUsuario") Long idUsuario,
+                                 @Param("fecha") LocalDate fecha);
+
 }

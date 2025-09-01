@@ -1,6 +1,7 @@
 package com.example.Proyecto.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,25 +22,30 @@ import java.util.List;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_usuario;
+    @Column(name = "id_usuario")
+    private Long idUsuario;
 
     @Column(name = "Correo", nullable = false, length = 100)
     private String correo;
 
-    @Column(name = "Contraseña", nullable = false, length = 25)
+    @Column(name = "Contraseña", nullable = false, length = 150)
     private String contrasena;
 
     @Column(name = "Nombre", nullable = false, length = 100)
     private String nombre;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "Fecha_Nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
 
     @Column(name = "Altura", nullable = false)
-    private float altura;
+    private Float altura;
 
     @Column(name = "Peso", nullable = false)
-    private float peso;
+    private Float peso;
+
+    @Column(name = "Sexo", nullable = false, length = 25)
+    private String sexo;
 
     @Column(name = "Restricciones_Dieta")
     private String restriccionesDieta;
@@ -47,16 +53,17 @@ public class Usuario {
     @Column(name = "Objetivos_Salud")
     private String objetivosSalud;
 
+    @Column(name = "Peso_Objetivo")
+    private Float pesoObjetivo;
+
+    @Column(name = "nivel_actividad")
+    private String nivelActividad;
+
     @Column(name = "Creado_En", nullable = false)
     private Timestamp creadoEn;
 
     @Column(name = "Actualizado_En")
     private Timestamp actualizadoEn;
-
-    /*@PrePersist
-    protected void onCreate() {
-        this.creadoEn = new Timestamp(System.currentTimeMillis());
-    }*/
 
     // Relaciones entre tablas
     // Uno a muchos
@@ -73,14 +80,13 @@ public class Usuario {
     @JsonIgnore
     private List<RutinaAlimenticiaIA> rutinaAlimenticiaIAS;
 
-    /*
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Alimento> alimentos;
-     */
+    private List<EstadisticaDiaria> estadisticaDiarias;
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<EstadisticasNutricionales> estadisticasNutricionales;
+    private List<EstadisticaMensual> estadisticaMensuales;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
@@ -101,6 +107,10 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<ModificacionRutinaChatbot> modificacionRutinaChatbots;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<AlimentoReciente> alimentosRecientes;
 
     // Uno a Uno
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

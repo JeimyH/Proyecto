@@ -14,40 +14,39 @@ import java.util.List;
 @AllArgsConstructor
 @Setter
 @Getter
-@Table(name = "Alimento", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"nombreAlimento", "origen"})
-})
+@Table(name = "Alimento")
 public class Alimento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_alimento;
+    @Column(name = "id_alimento")
+    private Long idAlimento;
 
     @Column(name = "Nombre_Alimento", nullable = false, length = 100)
     private String nombreAlimento;
 
     @Column(name = "Calorias", nullable = false)
-    private float calorias;
+    private Float calorias;
 
     @Column(name = "Proteinas", nullable = false)
-    private float proteinas;
+    private Float proteinas;
 
     @Column(name = "Carbohidratos", nullable = false)
-    private float carbohidratos;
+    private Float carbohidratos;
 
     @Column(name = "Grasas", nullable = false)
-    private float grasas;
+    private Float grasas;
 
     @Column(name = "Azucares", nullable = false)
-    private float azucares;
+    private Float azucares;
 
     @Column(name = "Fibra", nullable = false)
-    private float fibra;
+    private Float fibra;
 
     @Column(name = "Sodio", nullable = false)
-    private float sodio;
+    private Float sodio;
 
     @Column(name = "Grasas_Saturadas", nullable = false)
-    private float grasasSaturadas;
+    private Float grasasSaturadas;
 
     @Column(name = "Categoria", length = 50)
     private String categoria;
@@ -55,35 +54,23 @@ public class Alimento {
     @Column(name = "URL_Imagen")
     private String urlImagen;
 
-   /* @Column(name = "Marca_Producto", length = 100, nullable = false)
-    private String marcaProducto;
+    @Column(name = "Cantidad_Base", nullable = false)
+    private Float cantidadBase;  // cuantos gramos equivale el consumo de este alimento
 
-    @Column(name = "Codigo_Barras", length = 100, nullable = false)
-    private String codigoBarras;
+    @Column(name = "Unidad_Base", length =50, nullable = false)
+    private String unidadBase;  // gramos
 
-    @Column(name = "Porcion", length = 50, nullable = false)
-    private String porcion;
+    //Relaciones
 
-    @Column(name = "Unidad_Medida", length = 100, nullable = false)
-    private String unidadMedida;
-
-    @Column(name = "Origen")
-    @Enumerated(EnumType.STRING)
-    private Origen origen;
-
-    public enum Origen{
-        Ingresado,
-        API_Interna
-    }
-    */
-    //Relaciones uno a muchos
-    /*
-    @ManyToOne
-    @JoinColumn(name="creado_Por", referencedColumnName = "id_usuario", nullable = false)
-    @JsonIgnore
-    private Usuario usuario;
-     */
     @OneToMany(mappedBy = "alimento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<RegistroAlimento> registroAlimentos;
+
+    @OneToMany(mappedBy = "alimento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<UnidadEquivalencia> unidadEquivalencias;
+
+    @OneToMany(mappedBy = "alimento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<AlimentoReciente> alimentosRecientes;
 }

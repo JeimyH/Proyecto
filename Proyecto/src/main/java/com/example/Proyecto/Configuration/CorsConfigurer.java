@@ -13,11 +13,15 @@ public class CorsConfigurer {
           @Override
           public void addCorsMappings(CorsRegistry registry){
               registry.addMapping("/api/**")
-                      //Permitir solicitudes desde emulador de Android
-                      .allowedOrigins("http://10.0.2.2:8080") //Emulador de Android
+                      .allowedOriginPatterns(
+                              "http://192.168.1.10:8080",
+                              "http://10.0.2.2:8080",   // Emulador Android
+                              "http://localhost:8080", // Postman (si usas el interceptor de Postman)
+                              "*"                      // Opción segura si NO usas cookies/autenticación basada en sesión
+                      )
                       .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                       .allowedHeaders("*")
-                      .allowCredentials(true);
+                      .allowCredentials(false); //  Importante para que funcione con "*"
           }
         };
     }
